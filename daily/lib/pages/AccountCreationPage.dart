@@ -1,3 +1,5 @@
+import 'package:daily/entities/CreateAccountRequest.dart';
+import 'package:daily/services/LoginService.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -15,6 +17,16 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _newPasswordController = TextEditingController();
+
+  String? emailValidator(String? value) {
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
+    if (value == null || value.isEmpty || !emailRegex.hasMatch(value)) {
+      return 'Por favor, digite um e-mail válido.';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +71,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                         children: [
                           TextFormField(
                             controller: _emailController,
-                            validator: (value) {
-                              if (value == null ||
-                                  value == '' ||
-                                  !value.contains('@')) {
-                                return 'Por favor, digite um e-mail válido.';
-                              }
-                              return null;
-                            },
+                            validator: emailValidator,
                             decoration: const InputDecoration(
                                 hintText: "Digite seu e-mail",
                                 filled: true,
@@ -126,8 +131,13 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                           FilledButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                print('Email: ${_emailController.text}');
-                                print('Senha: ${_passwordController.text}');
+                                CreateAccountRequest request =
+                                    CreateAccountRequest(
+                                        accountType: 0,
+                                        password: _passwordController.text,
+                                        email: _emailController.text);
+
+                                LoginService().createAccount(request);
 
                                 Navigator.of(context).popAndPushNamed(
                                     "/createAccountCodeVerification");

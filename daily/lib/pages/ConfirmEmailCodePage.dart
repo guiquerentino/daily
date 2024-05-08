@@ -127,7 +127,9 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           backgroundColor: Colors.black,
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
