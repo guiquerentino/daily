@@ -27,7 +27,9 @@ class SucessfullAccountCreatedPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           backgroundColor: Colors.black,
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),

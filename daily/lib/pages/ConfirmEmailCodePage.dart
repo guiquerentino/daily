@@ -105,6 +105,8 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
                     onPressed: () {
                       String code = controllers.map((e) => e.text).join();
                       print("Código digitado: $code");
+
+                      Navigator.of(context).popAndPushNamed("/sucessfulAccountCreated");
                     },
                     style: ButtonStyle(
                         backgroundColor:

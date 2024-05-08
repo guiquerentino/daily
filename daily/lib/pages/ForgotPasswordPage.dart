@@ -127,8 +127,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           FilledButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                print('Email: ${_emailController.text}');
-                                print('Senha: ${_passwordController.text}');
+                                Navigator.of(context).pushNamed("/passCodeVerification");
                               }
                             },
                             style: const ButtonStyle(
@@ -151,7 +150,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).popAndPushNamed("/");
+          },
           backgroundColor: Colors.black,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),

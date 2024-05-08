@@ -105,7 +105,8 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
                   ElevatedButton(
                     onPressed: () {
                       String code = controllers.map((e) => e.text).join();
-                      print("Código digitado: $code");
+
+                      Navigator.of(context).popAndPushNamed("/sucessfulPasswordChanged");
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -126,7 +127,9 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           backgroundColor: Colors.black,
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),

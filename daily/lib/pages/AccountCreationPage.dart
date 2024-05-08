@@ -16,7 +16,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   final _passwordController = TextEditingController();
   final _newPasswordController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +72,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                 filled: true,
                                 border: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
                                 fillColor: Color.fromRGBO(196, 196, 196, 0.20),
                                 suffixIcon: Icon(Icons.email_outlined)),
@@ -93,7 +92,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                 filled: true,
                                 border: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
                                 fillColor: Color.fromRGBO(196, 196, 196, 0.20),
                                 suffixIcon: Icon(Icons.lock_outline)),
@@ -118,7 +117,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                 filled: true,
                                 border: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
                                 fillColor: Color.fromRGBO(196, 196, 196, 0.20),
                                 suffixIcon: Icon(Icons.lock_outline)),
@@ -129,13 +128,16 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                               if (_formKey.currentState!.validate()) {
                                 print('Email: ${_emailController.text}');
                                 print('Senha: ${_passwordController.text}');
+
+                                Navigator.of(context).popAndPushNamed(
+                                    "/createAccountCodeVerification");
                               }
                             },
                             style: const ButtonStyle(
                                 backgroundColor:
-                                MaterialStatePropertyAll(Colors.black),
+                                    MaterialStatePropertyAll(Colors.black),
                                 fixedSize:
-                                MaterialStatePropertyAll(Size(220, 40))),
+                                    MaterialStatePropertyAll(Size(220, 40))),
                             child: const Text("Cadastrar",
                                 style: TextStyle(fontSize: 18)),
                           ),
@@ -151,10 +153,13 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           backgroundColor: Colors.black,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: const Icon(Icons.arrow_back_outlined, color: Colors.white)),
-    );  }
+    );
+  }
 }

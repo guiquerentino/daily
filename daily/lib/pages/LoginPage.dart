@@ -25,7 +25,10 @@ class _LoginPageState extends State<LoginPage> {
           const Gap(31),
           const Text(
             "Bem-vindo(a) de volta!",
-            style: TextStyle(fontSize: 26, fontFamily: 'Poppins', fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 26,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.bold),
           ),
           const Gap(40),
           Expanded(
@@ -104,11 +107,18 @@ class _LoginPageState extends State<LoginPage> {
                                           fontWeight: FontWeight.w300)),
                                 ],
                               ),
-                              const Text("Esqueci minha senha",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.bold))
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed("/forgotPassword");
+                                },
+                                child: const Text("Esqueci minha senha",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400)),
+                              ),
                             ],
                           ),
                           const Gap(41),
@@ -140,18 +150,18 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const DailySocialLogin(),
                   const Spacer(),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Membro novo?",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Text(" Registre-se",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold))
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed("/createAccount");
+                            },
+                            child: const Text("Membro novo? Registre-se",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black, fontWeight: FontWeight.w400))),
                       ],
                     ),
                   )
