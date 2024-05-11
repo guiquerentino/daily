@@ -125,9 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           FilledButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                print('Email: ${_emailController.text}');
-                                print('Senha: ${_passwordController.text}');
-                                print(lembrarDeMim);
+                                Navigator.of(context).popAndPushNamed("/home");
                               }
                             },
                             style: const ButtonStyle(

@@ -1,6 +1,7 @@
 import 'package:daily/pages/AccountCreationPage.dart';
 import 'package:daily/pages/ConfirmEmailCodePage.dart';
 import 'package:daily/pages/ForgotPasswordPage.dart';
+import 'package:daily/pages/HomePage.dart';
 import 'package:daily/pages/LoginPage.dart';
 import 'package:daily/pages/PasswordCodeVerificationPage.dart';
 import 'package:daily/pages/SuccesfullAccountCreatedPage.dart';
@@ -19,7 +20,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       routes: {
@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
         '/createAccount': (_) => const AccountCreationPage(),
         '/createAccountCodeVerification': (_) => const ConfirmEmailCodePage(),
         '/sucessfulAccountCreated': (_) => const SucessfullAccountCreatedPage(),
-        '/sucessfulPasswordChanged': (_) => const SucessfullPasswordChangedPage()
+        '/sucessfulPasswordChanged': (_) => const SucessfullPasswordChangedPage(),
+        '/home': (_) => const HomePage(),
       },
     );
   }
