@@ -29,6 +29,7 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           const LoginAppBar(),
@@ -119,6 +120,7 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
                   const Gap(27),
                   const Text("Não recebeu nenhum código? Enviar novamente", style: TextStyle(fontWeight: FontWeight.bold),),
                   const Text("Enviar novo código em 00:30s", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),)
+
                 ],
               ),
             ),
@@ -128,7 +130,7 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
           },
           backgroundColor: Colors.black,
           shape:

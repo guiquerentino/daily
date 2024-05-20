@@ -28,7 +28,7 @@ class SucessfullAccountCreatedPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
           },
           backgroundColor: Colors.black,
           shape:

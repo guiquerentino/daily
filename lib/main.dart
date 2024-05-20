@@ -4,12 +4,18 @@ import 'package:daily/pages/ForgotPasswordPage.dart';
 import 'package:daily/pages/HomePage.dart';
 import 'package:daily/pages/LoginPage.dart';
 import 'package:daily/pages/PasswordCodeVerificationPage.dart';
+import 'package:daily/pages/SplashPage.dart';
 import 'package:daily/pages/SuccesfullAccountCreatedPage.dart';
 import 'package:daily/pages/SucessfullPasswordChangedPage.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (_) => const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +29,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       routes: {
-        '/': (_) => const LoginPage(),
+        '/': (_) => const SplashPage(),
+        '/login': (_) => const LoginPage(),
         '/forgotPassword': (_) => const ForgotPasswordPage(),
         '/passCodeVerification': (_) => const PasswordCodeVerification(),
         '/createAccount': (_) => const AccountCreationPage(),

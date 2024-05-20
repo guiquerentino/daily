@@ -28,6 +28,7 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           const LoginAppBar(),
@@ -103,9 +104,6 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
                   const Gap(27),
                   ElevatedButton(
                     onPressed: () {
-                      String code = controllers.map((e) => e.text).join();
-                      print("Código digitado: $code");
-
                       Navigator.of(context).popAndPushNamed("/sucessfulAccountCreated");
                     },
                     style: ButtonStyle(

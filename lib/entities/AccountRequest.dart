@@ -1,8 +1,8 @@
-class CreateAccountRequest {
-  BigInt? id;
+class AccountRequest {
+  int? id;
   int accountType;
   String email;
-  String password;
+  String? password;
   String? fullName;
   String? age;
   String? phoneNumber;
@@ -10,7 +10,7 @@ class CreateAccountRequest {
   String? professionalDocument;
   bool? canAttend;
 
-  CreateAccountRequest({
+  AccountRequest({
     this.id,
     required this.accountType,
     required this.email,
@@ -23,10 +23,10 @@ class CreateAccountRequest {
     this.canAttend,
   });
 
-  factory CreateAccountRequest.fromJson(Map<String, dynamic> json) {
-    return CreateAccountRequest(
-      id: json['id'] == null ? null : BigInt.parse(json['id']),
-      accountType: json['accountType'],
+  factory AccountRequest.fromJson(Map<String, dynamic> json) {
+    return AccountRequest(
+      id: json['id'],
+      accountType: _getAccountTypeFromString(json['accountType']),
       email: json['email'],
       password: json['password'],
       fullName: json['fullName'],
@@ -51,5 +51,11 @@ class CreateAccountRequest {
       'professionalDocument': professionalDocument,
       'canAttend': canAttend,
     };
+  }
+
+  static int _getAccountTypeFromString(String? type) {
+    if (type == "PATIENT") return 0;
+    if (type == "PSYCHOLOGIST") return 1;
+    throw const FormatException("Invalid account type");
   }
 }

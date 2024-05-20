@@ -1,4 +1,4 @@
-import 'package:daily/entities/CreateAccountRequest.dart';
+import 'package:daily/entities/AccountRequest.dart';
 import 'package:daily/services/LoginService.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -17,7 +17,9 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _newPasswordController = TextEditingController();
-
+  final _nameController = TextEditingController();
+  bool mostrarSenha = false;
+  bool mostrarSenhaConfirm = false;
   String? emailValidator(String? value) {
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -31,6 +33,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           const LoginAppBar(),
@@ -84,58 +87,87 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                           ),
                           const Gap(15),
                           TextFormField(
-                            controller: _passwordController,
+                            controller: _nameController,
                             obscureText: true,
                             validator: (value) {
                               if (value == null || value == '') {
-                                return 'Por favor, digite uma senha válida.';
+                                return 'Por favor, digite um nome válido.';
                               }
                               return null;
                             },
                             decoration: const InputDecoration(
-                                hintText: "Senha",
+                                hintText: "Nome",
                                 filled: true,
                                 border: OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
                                 fillColor: Color.fromRGBO(196, 196, 196, 0.20),
-                                suffixIcon: Icon(Icons.lock_outline)),
+                                suffixIcon: Icon(Icons.abc_sharp)),
+                          ),
+                          const Gap(15),
+                          TextFormField(
+                            controller: _passwordController,
+                            obscureText: !mostrarSenha,
+                            validator: (value) {
+                              if (value == null || value == '') {
+                                return 'Por favor, digite uma senha válida.';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                                hintText: "Senha",
+                                filled: true,
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                    borderSide: BorderSide.none),
+                                fillColor:
+                                const Color.fromRGBO(196, 196, 196, 0.20),
+                                suffixIcon: IconButton(
+                                    icon: mostrarSenha ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        mostrarSenha = !mostrarSenha;
+                                      });
+                                    })),
                           ),
                           const Gap(15),
                           TextFormField(
                             controller: _newPasswordController,
-                            obscureText: true,
+                            obscureText: !mostrarSenhaConfirm,
                             validator: (value) {
                               if (value == null || value == '') {
                                 return 'Por favor, digite uma senha válida.';
                               }
-
-                              if (value != _passwordController.text) {
-                                return 'As senhas não coincidem';
-                              }
-
                               return null;
                             },
-                            decoration: const InputDecoration(
-                                hintText: "Confirme sua nova senha",
+                            decoration: InputDecoration(
+                                hintText: "Confirme sua senha",
                                 filled: true,
-                                border: OutlineInputBorder(
+                                border: const OutlineInputBorder(
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
+                                    BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
-                                fillColor: Color.fromRGBO(196, 196, 196, 0.20),
-                                suffixIcon: Icon(Icons.lock_outline)),
+                                fillColor:
+                                const Color.fromRGBO(196, 196, 196, 0.20),
+                                suffixIcon: IconButton(
+                                    icon: mostrarSenhaConfirm ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        mostrarSenhaConfirm = !mostrarSenhaConfirm;
+                                      });
+                                    })),
                           ),
                           const Gap(41),
                           FilledButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                CreateAccountRequest request =
-                                    CreateAccountRequest(
-                                        accountType: 0,
-                                        password: _passwordController.text,
-                                        email: _emailController.text);
+                                AccountRequest request = AccountRequest(
+                                    fullName: _nameController.text,
+                                    accountType: 0,
+                                    password: _passwordController.text,
+                                    email: _emailController.text);
 
                                 LoginService().createAccount(request);
 
@@ -164,7 +196,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
           },
           backgroundColor: Colors.black,
           shape:
