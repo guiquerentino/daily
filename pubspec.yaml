@@ -16,6 +16,9 @@ dependencies:
   http: ^1.2.0
   intl: 0.18.1
   shared_preferences: ^2.2.3
+  flutter_staggered_animations: ^1.1.1
+  font_awesome_flutter: ^10.7.0
+  iconsax: ^0.0.8
 
 dev_dependencies:
   flutter_test:
@@ -30,9 +33,21 @@ flutter:
     - assets/happy.svg
     - assets/raccoon.svg
     - assets/raccon_logo.png
+    - assets/emoji_angel.svg
+    - assets/emoji_happy.svg
+    - assets/emoji.png
+    - assets/sun.png
   fonts:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
+          style: normal
+    - family: Pangram
+      fonts:
+        - asset: assets/fonts/Pangram-Regular.otf
+          style: normal
+    - family: Pangram
+      fonts:
+        - asset: assets/fonts/Pangram-Bold.otf
           style: normal
   uses-material-design: true
