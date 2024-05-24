@@ -29,14 +29,26 @@ flutter:
   assets:
     - assets/loginbar.svg
     - assets/sucess.svg
-    - assets/avatar.svg
-    - assets/happy.svg
-    - assets/raccoon.svg
     - assets/raccon_logo.png
-    - assets/emoji_angel.svg
-    - assets/emoji_happy.svg
-    - assets/emoji.png
+    - assets/emoji_felicidade.png
+    - assets/emoji_ansiedade.png
+    - assets/emoji_tedio.png
+    - assets/emoji_tristeza.png
+    - assets/emoji_confusao.png
+    - assets/emoji_animacao.png
+    - assets/emoji_decepcao.png
+    - assets/emoji_foco.png
+    - assets/emoji_apatico.png
+    - assets/emoji_surpresa.png
+    - assets/emoji_cansaso.png
+    - assets/emoji_motivado.png
     - assets/sun.png
+    - assets/clear.png
+    - assets/cold.png
+    - assets/cloudy.png
+    - assets/rainy.png
+    - assets/tempestade.png
+    - assets/emoji_not_found.png
   fonts:
     - family: Poppins
       fonts:
