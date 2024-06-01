@@ -31,6 +31,7 @@ flutter:
     - assets/loginbar.svg
     - assets/sucess.svg
     - assets/raccon_logo.png
+    - assets/raccoon.svg
     - assets/emoji_felicidade.png
     - assets/emoji_ansiedade.png
     - assets/emoji_tedio.png

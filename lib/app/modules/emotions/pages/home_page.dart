@@ -1,19 +1,21 @@
-import 'package:daily/components/DailyBottomNavigationBar.dart';
-import 'package:daily/components/DailyDrawer.dart';
-import 'package:daily/entities/AccountRequest.dart';
-import 'package:daily/http/RegistroHttp.dart';
-import 'package:daily/pages/RegistroDetailsBottomSheet.dart';
-import 'package:daily/utils/DateUtils.dart';
-import 'package:daily/utils/EmojisUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
-import '../entities/Registro.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import '../../../core/domain/Registro.dart';
+import '../../../core/utils/date_utils.dart';
+import '../../../core/utils/emoji_utils.dart';
+import '../components/daily_bottom_navigation_bar.dart';
+import '../components/daily_drawer.dart';
+import '../../../core/domain/account_request.dart';
+import '../http/emotions_http.dart';
+import 'registro_details_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+   static String ROUTE_NAME = '/';
+
+  const HomePage({super.key, required user});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -33,6 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    initializeDateFormatting('pt_BR');
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToEnd();

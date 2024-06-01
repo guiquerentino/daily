@@ -1,17 +1,21 @@
-import 'dart:ui';
-
-import 'package:daily/components/DailySocialLogin.dart';
-import 'package:daily/entities/AccountRequest.dart';
-import 'package:daily/services/LoginService.dart';
+import 'package:daily/app/modules/auth/pages/account_creation_page.dart';
+import 'package:daily/app/modules/auth/pages/forgot_password_page.dart';
+import 'package:daily/app/modules/emotions/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
-import 'package:daily/components/DailyLoginAppBar.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/daily_login_app_bar.dart';
+import '../components/daily_social_login.dart';
+import '../../../core/domain/account_request.dart';
+import '../http/auth_http.dart';
+
 class LoginPage extends StatefulWidget {
+  final String ROUTE_NAME = '/';
+
   const LoginPage({super.key});
 
   @override
@@ -29,21 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    initializeState();
   }
-
-  Future<void> initializeState() async {
-    AccountRequest? accountRequest = await LoginService().isLogged();
-
-    if (accountRequest != null) {
-      Response response = await LoginService().authorizeAccount(accountRequest);
-      if (response.statusCode == 202) {
-        Navigator.of(context).popAndPushNamed("/home",
-            arguments: AccountRequest.fromJson(jsonDecode(response.body)));
-      }
-    }
-  }
-
 
     String? emailValidator(String? value) {
       final emailRegex = RegExp(
@@ -162,8 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Navigator.of(context)
-                                            .pushNamed("/forgotPassword");
+                                        Modular.to.navigate('/auth${const ForgotPasswordPage().ROUTE_NAME}');
                                       },
                                       child: const Text("Esqueci minha senha",
                                           style: TextStyle(
@@ -183,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                           email: _emailController.text,
                                           password: _passwordController.text);
 
-                                      Response response = await LoginService()
+                                      Response response = await AuthHttp()
                                           .authorizeAccount(request);
                                       if (response.statusCode == 202) {
                                         if (lembrarDeMim) {
@@ -197,10 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                                               _passwordController.text);
                                         }
 
-                                        Navigator.of(context).popAndPushNamed(
-                                            "/home",
-                                            arguments: AccountRequest.fromJson(
-                                                jsonDecode(response.body)));
+                                        Modular.to.navigate('/emotions${HomePage.ROUTE_NAME}', arguments: AccountRequest.fromJson(jsonDecode(response.body)));
                                       } else {
                                         setState(() {
                                           erroLogin = true;
@@ -231,8 +217,8 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed(
-                                        "/createAccount");
+                                    Modular.to.navigate('/auth${const AccountCreationPage().ROUTE_NAME}');
+
                                   },
                                   child: const Text("Membro novo? Registre-se",
                                       style: TextStyle(

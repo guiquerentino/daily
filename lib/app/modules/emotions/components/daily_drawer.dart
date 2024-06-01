@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../auth/pages/login_page.dart';
 
 class DailyDrawer extends StatelessWidget {
   final String? accountName;
@@ -102,7 +106,14 @@ class DailyDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app_rounded),
             title: const Text("Sair"),
-            onTap: () {},
+            onTap: () async {
+              final prefs = await SharedPreferences.getInstance();
+
+              prefs.remove("email");
+              prefs.remove("password");
+
+              Modular.to.navigate("/auth${LoginPage().ROUTE_NAME}");
+            },
           ),
         ],
       ),

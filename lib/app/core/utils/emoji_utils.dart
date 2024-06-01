@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:daily/entities/Registro.dart';
+
+import '../domain/Registro.dart';
+
 
 class EmojisUtils {
   Image retornaEmojiClima(WEATHER_TYPE weatherType) {

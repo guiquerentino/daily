@@ -1,8 +1,10 @@
-import 'package:daily/entities/Registro.dart';
-import 'package:daily/utils/EmojisUtils.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+
+import '../../../core/domain/Registro.dart';
+import '../../../core/utils/emoji_utils.dart';
 
 class RegistroDetailsBottomSheet extends StatefulWidget {
   final Registro registro;

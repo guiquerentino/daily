@@ -1,7 +1,9 @@
 import 'dart:convert';
-import 'package:daily/entities/Registro.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+
+import '../../../core/domain/Registro.dart';
+
 
 class RegistroHttp {
 

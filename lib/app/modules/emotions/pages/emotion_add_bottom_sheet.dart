@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../entities/Registro.dart';
+import '../../../core/domain/Registro.dart';
+
 
 class EmotionAddBottomSheet extends StatefulWidget {
   final PageController pageController;

@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../entities/AccountRequest.dart';
+import '../../../core/domain/account_request.dart';
 
-class LoginService {
+
+class AuthHttp {
   Future<http.Response> createAccount(AccountRequest request) {
     return http.post(
       Uri.parse('http://10.0.2.2:8080/api/v1/account'),

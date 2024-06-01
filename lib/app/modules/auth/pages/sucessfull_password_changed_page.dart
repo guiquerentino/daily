@@ -1,8 +1,12 @@
+import 'package:daily/app/modules/auth/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 class SucessfullPasswordChangedPage extends StatelessWidget {
+  final String ROUTE_NAME = '/sucess-pass';
+
   const SucessfullPasswordChangedPage({super.key});
 
   @override
@@ -28,7 +32,7 @@ class SucessfullPasswordChangedPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
+            Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
           backgroundColor: Colors.black,
           shape:

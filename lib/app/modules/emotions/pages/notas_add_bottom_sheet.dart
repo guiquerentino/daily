@@ -1,9 +1,7 @@
-import 'package:daily/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-import '../entities/Registro.dart';
-import '../http/RegistroHttp.dart';
+import '../../../core/domain/Registro.dart';
+import '../http/emotions_http.dart';
 
 class NotasAddBottomSheet extends StatefulWidget {
   final PageController pageController;

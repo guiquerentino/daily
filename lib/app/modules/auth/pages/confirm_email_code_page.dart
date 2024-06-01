@@ -1,9 +1,14 @@
+import 'package:daily/app/modules/auth/pages/account_creation_page.dart';
+import 'package:daily/app/modules/auth/pages/succesfull_account_created_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 
-import '../components/DailyLoginAppBar.dart';
+import '../components/daily_login_app_bar.dart';
 
 class ConfirmEmailCodePage extends StatefulWidget {
+  final String ROUTE_NAME = '/confirm-email';
+
   const ConfirmEmailCodePage({super.key});
 
   @override
@@ -104,7 +109,7 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
                   const Gap(27),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).popAndPushNamed("/sucessfulAccountCreated");
+                      Modular.to.navigate('/auth${const SucessfullAccountCreatedPage().ROUTE_NAME}');
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -126,7 +131,7 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Modular.to.navigate('/auth${const AccountCreationPage().ROUTE_NAME}');
           },
           backgroundColor: Colors.black,
           shape:

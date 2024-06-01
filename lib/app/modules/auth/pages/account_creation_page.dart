@@ -1,11 +1,16 @@
-import 'package:daily/entities/AccountRequest.dart';
-import 'package:daily/services/LoginService.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
-import '../components/DailyLoginAppBar.dart';
+import 'package:daily/app/modules/auth/pages/confirm_email_code_page.dart';
+import 'package:daily/app/modules/auth/pages/login_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:gap/gap.dart';
+import '../components/daily_login_app_bar.dart';
+import '../../../core/domain/account_request.dart';
+import '../http/auth_http.dart';
 
 class AccountCreationPage extends StatefulWidget {
+  final String ROUTE_NAME = '/create_account';
+
   const AccountCreationPage({super.key});
 
   @override
@@ -169,10 +174,9 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                     password: _passwordController.text,
                                     email: _emailController.text);
 
-                                LoginService().createAccount(request);
+                                AuthHttp().createAccount(request);
 
-                                Navigator.of(context).popAndPushNamed(
-                                    "/createAccountCodeVerification");
+                                Modular.to.navigate('/auth${const ConfirmEmailCodePage().ROUTE_NAME}');
                               }
                             },
                             style: const ButtonStyle(
@@ -196,7 +200,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
+            Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
           backgroundColor: Colors.black,
           shape:

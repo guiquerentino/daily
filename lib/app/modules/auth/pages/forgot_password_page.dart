@@ -1,13 +1,16 @@
-import 'dart:convert';
-
-import 'package:daily/components/DailyLoginAppBar.dart';
-import 'package:daily/entities/AccountRequest.dart';
+import 'package:daily/app/modules/auth/pages/password_code_verification_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart';
-import '../services/LoginService.dart';
+import '../components/daily_login_app_bar.dart';
+import '../../../core/domain/account_request.dart';
+import '../http/auth_http.dart';
+import 'login_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
+  final String ROUTE_NAME = '/forgot-password';
+
   const ForgotPasswordPage({super.key});
 
   @override
@@ -160,12 +163,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                     email: _emailController.text,
                                     password: _passwordController.text);
 
-                                Response response = await LoginService()
+                                Response response = await AuthHttp()
                                     .changePassword(request);
 
                                 if (response.statusCode == 200) {
-                                  Navigator.of(context)
-                                      .pushNamed("/passCodeVerification");
+                                  Modular.to.navigate('/auth${const PasswordCodeVerification().ROUTE_NAME}');
+
                                 } else {
                                   setState(() {
                                     erroTrocarSenha = true;
@@ -197,7 +200,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         height: 50.0,
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
+            Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
           backgroundColor: Colors.black,
           shape:

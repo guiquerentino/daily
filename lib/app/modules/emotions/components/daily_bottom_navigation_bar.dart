@@ -1,6 +1,7 @@
-import 'package:daily/components/DailyPageView.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
+import 'daily_page_view.dart';
 
 class DailyBottomNavigationBar extends StatefulWidget {
   final Function reloadRegistro;

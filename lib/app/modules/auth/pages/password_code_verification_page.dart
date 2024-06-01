@@ -1,9 +1,14 @@
+import 'package:daily/app/modules/auth/pages/login_page.dart';
+import 'package:daily/app/modules/auth/pages/sucessfull_password_changed_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 
-import '../components/DailyLoginAppBar.dart';
+import '../components/daily_login_app_bar.dart';
 
 class PasswordCodeVerification extends StatefulWidget {
+  final String ROUTE_NAME = '/pass-code';
+
   const PasswordCodeVerification({super.key});
 
   @override
@@ -107,7 +112,7 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
                     onPressed: () {
                       String code = controllers.map((e) => e.text).join();
 
-                      Navigator.of(context).popAndPushNamed("/sucessfulPasswordChanged");
+                      Modular.to.navigate('/auth${const SucessfullPasswordChangedPage().ROUTE_NAME}');
                     },
                     style: ButtonStyle(
                         backgroundColor:
@@ -130,7 +135,7 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).popUntil(ModalRoute.withName("/login"));
+            Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
           backgroundColor: Colors.black,
           shape:

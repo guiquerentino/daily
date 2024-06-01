@@ -1,8 +1,8 @@
-import 'package:daily/pages/NotasAddBottomSheet.dart';
 import 'package:flutter/material.dart';
-import '../entities/Registro.dart';
-import '../pages/EmotionAddBottomSheet.dart';
-import '../pages/MotivosAddBottomSheet.dart';
+import '../../../core/domain/Registro.dart';
+import '../pages/emotion_add_bottom_sheet.dart';
+import '../pages/motivos_add_bottom_sheet.dart';
+import '../pages/notas_add_bottom_sheet.dart';
 
 class DailyPageView extends StatefulWidget {
   final Function reloadRegistro;
