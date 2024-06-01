@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:daily/components/DailyBottomNavigationBar.dart';
 import 'package:daily/components/DailyDrawer.dart';
 import 'package:daily/entities/AccountRequest.dart';
 import 'package:daily/http/RegistroHttp.dart';
+import 'package:daily/pages/RegistroDetailsBottomSheet.dart';
 import 'package:daily/utils/DateUtils.dart';
 import 'package:daily/utils/EmojisUtils.dart';
 import 'package:flutter/material.dart';
@@ -37,13 +36,26 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToEnd();
-      _loadRegistros();
+      loadRegistros();
     });
   }
 
-  Future<void> _loadRegistros() async {
-    final params = ModalRoute.of(context)?.settings.arguments as AccountRequest;
+  void _lidarComArrastoHorizontal(details) {
+    if (details.primaryVelocity! > 0.0) {
+      dataSelecionada = dataSelecionada.subtract(const Duration(days: 1));
+      dataSelecionadaIndex++;
+      loadRegistros();
+    } else {
+      if (dataSelecionadaIndex > 0) {
+        dataSelecionada = dataSelecionada.add(const Duration(days: 1));
+        dataSelecionadaIndex--;
+        loadRegistros();
+      }
+    }
+  }
 
+  Future<void> loadRegistros() async {
+    final params = ModalRoute.of(context)?.settings.arguments as AccountRequest;
     setState(() {
       _isLoading = true;
     });
@@ -54,7 +66,7 @@ class _HomePageState extends State<HomePage> {
 
       setState(() {
         loadedRegistros
-            .sort((a, b) => b.dataHoraCriacao.compareTo(a.dataHoraCriacao));
+            .sort((a, b) => b.dataHoraCriacao!.compareTo(a.dataHoraCriacao!));
         registros = loadedRegistros;
       });
       _isLoading = false;
@@ -93,7 +105,7 @@ class _HomePageState extends State<HomePage> {
         dataSelecionada = DateTime(picked.year, picked.month, picked.day);
         dataSelecionadaIndex = -1;
       });
-      _loadRegistros();
+      loadRegistros();
     }
   }
 
@@ -194,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                                   dataSelecionada = _getDateWithMidnight(
                                       DateTime.now()
                                           .subtract(Duration(days: i)));
-                                  _loadRegistros();
+                                  loadRegistros();
                                 });
                               },
                               child: Container(
@@ -263,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         setState(() {
                           if (mostrarRegistros == false) {
-                            _loadRegistros();
+                            loadRegistros();
                           }
                           mostrarRegistros = !mostrarRegistros;
                         });
@@ -279,206 +291,237 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const Gap(20),
                 if (mostrarRegistros)
-                  AnimationLimiter(
-                    child: Column(
-                      children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 375),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          verticalOffset: -10.0,
-                          child: FadeInAnimation(
-                            child: widget,
-                          ),
-                        ),
-                        children: [
-                          if (registros.isEmpty && _isLoading == false)
-                            Center(
-                              child: Column(
-                                children: [
-                                  const Gap(10),
-                                  Image.asset("assets/emoji_not_found.png"),
-                                  const Gap(25),
-                                  const Text(
-                                    "Nenhum registro encontrado.",
-                                    style: TextStyle(
-                                        fontFamily: 'Pangram', fontSize: 20),
-                                  )
-                                ],
+                  GestureDetector(
+                    onHorizontalDragEnd: (details) =>
+                        _lidarComArrastoHorizontal(details),
+                    child: SizedBox(
+                      child: AnimationLimiter(
+                        child: Column(
+                          children: AnimationConfiguration.toStaggeredList(
+                            duration: const Duration(milliseconds: 375),
+                            childAnimationBuilder: (widget) => SlideAnimation(
+                              verticalOffset: -10.0,
+                              child: FadeInAnimation(
+                                child: widget,
                               ),
-                            )
-                          else if (_isLoading == false)
-                            for (int i = 0; i < registros.length; i++)
-                              GestureDetector(
-                                onTap: () {},
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 16.0),
-                                  child: Container(
-                                    width: double.maxFinite,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(18.0)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          offset: Offset(0.0, 4.0),
-                                          blurRadius: 3.0,
-                                        ),
-                                      ],
-                                    ),
+                            ),
+                            children: [
+                              if (registros.isEmpty && _isLoading == false)
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      const Gap(10),
+                                      Image.asset("assets/emoji_not_found.png"),
+                                      const Gap(25),
+                                      const Text(
+                                        "Nenhum registro encontrado.",
+                                        style: TextStyle(
+                                            fontFamily: 'Pangram',
+                                            fontSize: 20),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              else if (_isLoading == false)
+                                for (int i = 0; i < registros.length; i++)
+                                  GestureDetector(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (context) {
+                                            return RegistroDetailsBottomSheet(
+                                                registro: registros[i]);
+                                          });
+                                    },
+                                    onHorizontalDragEnd: (details) {
+                                      _lidarComArrastoHorizontal(details);
+                                    },
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 0, 0, 16.0),
+                                      child: Container(
+                                        width: double.maxFinite,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(18.0)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey,
+                                              offset: Offset(0.0, 4.0),
+                                              blurRadius: 3.0,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
                                             children: [
-                                              EmojisUtils().retornaEmojiEmocao(
-                                                  registros[i].emotionType),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        EmojisUtils()
-                                                            .retornaNomeFormatadoEmocao(
-                                                                registros[i]
-                                                                    .emotionType),
-                                                        style: const TextStyle(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontFamily:
-                                                                'Pangram')),
-                                                    Text(
-                                                        DateFormat()
-                                                            .add_Hm()
-                                                            .format(registros[i]
-                                                                .dataHoraCriacao),
-                                                        style: const TextStyle(
-                                                            fontSize: 14,
-                                                            fontFamily:
-                                                                'Pangram',
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal)),
-                                                  ],
-                                                ),
-                                              ),
-                                              const Spacer(),
                                               Row(
-                                                children: [
-                                                  EmojisUtils()
-                                                      .retornaEmojiClima(
-                                                          registros[i]
-                                                              .weatherType),
-                                                  const Gap(8),
-                                                  const Text("Editar",
-                                                      style: TextStyle(
-                                                          fontSize: 11,
-                                                          fontFamily: 'Pangram',
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: SizedBox(
-                                              width: double.maxFinite,
-                                              child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  SizedBox(
-                                                    width: 300.0,
-                                                    child: RichText(
-                                                      textAlign: TextAlign.left,
-                                                      text: TextSpan(
-                                                        style: const TextStyle(
-                                                          fontFamily: 'Pangram',
-                                                          fontSize: 16,
-                                                          color: Colors.black,
-                                                        ),
-                                                        children: <TextSpan>[
-                                                          const TextSpan(
-                                                              text:
-                                                                  'Motivos: '),
-                                                          if (registros[i]
-                                                                      .tags !=
-                                                                  null &&
-                                                              registros[i]
-                                                                  .tags!
-                                                                  .isNotEmpty)
-                                                            ...registros[i]
-                                                                .tags!
-                                                                .map((tag) =>
-                                                                    TextSpan(
-                                                                      text:
-                                                                          '$tag${registros[i].tags!.last != tag ? ', ' : ''}',
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
-                                                                    ))
-                                                                .toList(),
-                                                        ],
-                                                      ),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(height: 8.0),
-                                                  // Adding some spacing
-                                                  SizedBox(
-                                                    width: double.maxFinite,
-                                                    child: RichText(
-                                                      textAlign: TextAlign.left,
-                                                      text: TextSpan(
-                                                        style: const TextStyle(
-                                                          fontFamily: 'Pangram',
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                        children: <TextSpan>[
-                                                          const TextSpan(
-                                                            text: 'Nota: ',
-                                                            style: TextStyle(
+                                                  EmojisUtils()
+                                                      .retornaEmojiEmocao(
+                                                          registros[i]
+                                                              .emotionType!, false),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                            EmojisUtils()
+                                                                .retornaNomeFormatadoEmocao(
+                                                                    registros[i]
+                                                                        .emotionType!),
+                                                            style: const TextStyle(
+                                                                fontSize: 16,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          TextSpan(
-                                                              text: registros[i]
-                                                                  .text,
-                                                              style: const TextStyle(
-                                                                  fontFamily:
-                                                                      'Pangram')),
-                                                        ],
-                                                      ),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                                                        .bold,
+                                                                fontFamily:
+                                                                    'Pangram')),
+                                                        Text(
+                                                            DateFormat()
+                                                                .add_Hm()
+                                                                .format(registros[
+                                                                        i]
+                                                                    .dataHoraCriacao!),
+                                                            style: const TextStyle(
+                                                                fontSize: 14,
+                                                                fontFamily:
+                                                                    'Pangram',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal)),
+                                                      ],
                                                     ),
                                                   ),
+                                                  const Spacer(),
+                                                  Row(
+                                                    children: [
+                                                      // if(registros[i].comments!.isNotEmpty)
+                                                      //   Icon(Icons.notifications_on_sharp),
+                                                      Image.asset(
+                                                          "assets/sun.png"),
+                                                      const Gap(8),
+                                                    ],
+                                                  )
                                                 ],
                                               ),
-                                            ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: SizedBox(
+                                                  width: double.maxFinite,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 300.0,
+                                                        child: RichText(
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily:
+                                                                  'Pangram',
+                                                              fontSize: 16,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            children: <TextSpan>[
+                                                              const TextSpan(
+                                                                  text:
+                                                                      'Motivos: '),
+                                                              if (registros[i]
+                                                                          .tags !=
+                                                                      null &&
+                                                                  registros[i]
+                                                                      .tags!
+                                                                      .isNotEmpty)
+                                                                ...registros[i]
+                                                                    .tags!
+                                                                    .map((tag) =>
+                                                                        TextSpan(
+                                                                          text:
+                                                                              '$tag${registros[i].tags!.last != tag ? ', ' : ''}',
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                          ),
+                                                                        ))
+                                                                    .toList(),
+                                                            ],
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 8.0),
+                                                      SizedBox(
+                                                        width: double.maxFinite,
+                                                        child: RichText(
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          text: TextSpan(
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily:
+                                                                  'Pangram',
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            children: <TextSpan>[
+                                                              const TextSpan(
+                                                                text: 'Nota: ',
+                                                                style: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                              TextSpan(
+                                                                  text:
+                                                                      registros[
+                                                                              i]
+                                                                          .text,
+                                                                  style: const TextStyle(
+                                                                      fontFamily:
+                                                                          'Pangram')),
+                                                            ],
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                        ],
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -490,6 +533,8 @@ class _HomePageState extends State<HomePage> {
           accountName: params.fullName,
           accountEmail: params.email,
         ),
-        bottomNavigationBar: const DailyBottomNavigationBar());
+        bottomNavigationBar: DailyBottomNavigationBar(
+          reloadRegistro: loadRegistros,
+        ));
   }
 }

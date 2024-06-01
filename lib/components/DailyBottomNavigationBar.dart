@@ -1,10 +1,11 @@
 import 'package:daily/components/DailyPageView.dart';
-import 'package:daily/components/EmotionAddBottomSheet.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class DailyBottomNavigationBar extends StatefulWidget {
-  const DailyBottomNavigationBar({Key? key});
+  final Function reloadRegistro;
+
+  const DailyBottomNavigationBar({super.key, required this.reloadRegistro});
 
   @override
   State<DailyBottomNavigationBar> createState() =>
@@ -12,13 +13,14 @@ class DailyBottomNavigationBar extends StatefulWidget {
 }
 
 class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
-
   void _showEmotionBottomSheet(BuildContext context) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return const DailyPageView();
+          return DailyPageView(
+            reloadRegistro: widget.reloadRegistro,
+          );
         });
   }
 
@@ -43,7 +45,7 @@ class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
                   label: "Estatísticas"),
               NavigationDestination(
                   icon: PopupMenuButton(
-                    offset: Offset(-50, -170),
+                    offset: const Offset(-50, -170),
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuEntry<String>>[
                       const PopupMenuItem<String>(

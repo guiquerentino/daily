@@ -15,10 +15,23 @@ class RegistroHttp {
     );
 
     if (response.statusCode == 200) {
-      List<dynamic> jsonList = jsonDecode(response.body);
+      String responseBody = utf8.decode(response.bodyBytes);
+      List<dynamic> jsonList = jsonDecode(responseBody);
       return Registro.fromJsonList(jsonList);
     } else {
       throw Exception('Failed to load registros');
     }
+  }
+
+
+  Future<void> salvarRegistro(Registro request) async {
+    request.ownerId = 352;
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8080/api/v1/register'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(request.toJson())
+    );
   }
 }

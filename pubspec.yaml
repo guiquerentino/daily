@@ -19,6 +19,7 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   font_awesome_flutter: ^10.7.0
   iconsax: ^0.0.8
+  flutter_modular: ^6.3.3
 
 dev_dependencies:
   flutter_test:

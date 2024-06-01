@@ -65,7 +65,8 @@ class DailyDrawer extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.calendar_month),
                   title: const Text("Calendário"),
-                  onTap: () {},
+                  onTap: () {
+                  },
                 ),
                 Divider(),
                 ListTile(
