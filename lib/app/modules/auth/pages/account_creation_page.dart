@@ -1,11 +1,13 @@
-
+import 'package:daily/app/core/domain/external/create_account_request.dart';
 import 'package:daily/app/modules/auth/pages/confirm_email_code_page.dart';
 import 'package:daily/app/modules/auth/pages/login_page.dart';
+import 'package:daily/app/modules/ui/DailyButton.dart';
+import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 import '../components/daily_login_app_bar.dart';
-import '../../../core/domain/account_request.dart';
+import '../../../core/domain/account.dart';
 import '../http/auth_http.dart';
 
 class AccountCreationPage extends StatefulWidget {
@@ -25,6 +27,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   final _nameController = TextEditingController();
   bool mostrarSenha = false;
   bool mostrarSenhaConfirm = false;
+
   String? emailValidator(String? value) {
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -93,7 +96,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                           const Gap(15),
                           TextFormField(
                             controller: _nameController,
-                            obscureText: true,
                             validator: (value) {
                               if (value == null || value == '') {
                                 return 'Por favor, digite um nome válido.';
@@ -125,12 +127,14 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                 filled: true,
                                 border: const OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
                                 fillColor:
-                                const Color.fromRGBO(196, 196, 196, 0.20),
+                                    const Color.fromRGBO(196, 196, 196, 0.20),
                                 suffixIcon: IconButton(
-                                    icon: mostrarSenha ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                                    icon: mostrarSenha
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
                                     onPressed: () {
                                       setState(() {
                                         mostrarSenha = !mostrarSenha;
@@ -152,41 +156,43 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                 filled: true,
                                 border: const OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                        BorderRadius.all(Radius.circular(10)),
                                     borderSide: BorderSide.none),
                                 fillColor:
-                                const Color.fromRGBO(196, 196, 196, 0.20),
+                                    const Color.fromRGBO(196, 196, 196, 0.20),
                                 suffixIcon: IconButton(
-                                    icon: mostrarSenhaConfirm ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+                                    icon: mostrarSenhaConfirm
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
                                     onPressed: () {
                                       setState(() {
-                                        mostrarSenhaConfirm = !mostrarSenhaConfirm;
+                                        mostrarSenhaConfirm =
+                                            !mostrarSenhaConfirm;
                                       });
                                     })),
                           ),
                           const Gap(41),
-                          FilledButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                AccountRequest request = AccountRequest(
-                                    fullName: _nameController.text,
-                                    accountType: 0,
-                                    password: _passwordController.text,
-                                    email: _emailController.text);
+                          DailyButton(
+                              text: DailyText.text("Cadastrar")
+                                  .body
+                                  .large
+                                  .neutral,
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
 
-                                AuthHttp().createAccount(request);
+                                  CreateAccountRequest request =
+                                      CreateAccountRequest(
+                                          email: _emailController.text,
+                                          password: _passwordController.text,
+                                          fullName: _nameController.text,
+                                          accountType: 0);
 
-                                Modular.to.navigate('/auth${const ConfirmEmailCodePage().ROUTE_NAME}');
-                              }
-                            },
-                            style: const ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll(Colors.black),
-                                fixedSize:
-                                    MaterialStatePropertyAll(Size(220, 40))),
-                            child: const Text("Cadastrar",
-                                style: TextStyle(fontSize: 18)),
-                          ),
+                                  AuthHttp().createAccount(request);
+
+                                  Modular.to.navigate(
+                                      '/auth${const ConfirmEmailCodePage().ROUTE_NAME}');
+                                }
+                              })
                         ],
                       ),
                     ),
@@ -202,7 +208,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
           onPressed: () {
             Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromRGBO(53, 56, 63, 1),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: const Icon(Icons.arrow_back_outlined, color: Colors.white)),

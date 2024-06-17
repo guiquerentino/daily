@@ -1,5 +1,7 @@
 import 'package:daily/app/modules/auth/pages/account_creation_page.dart';
 import 'package:daily/app/modules/auth/pages/succesfull_account_created_page.dart';
+import 'package:daily/app/modules/ui/DailyButton.dart';
+import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
@@ -83,7 +85,7 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
                                   blurRadius: 3)
                             ],
                             borderRadius:
-                            BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(10))),
                         child: Center(
                           child: TextField(
                             controller: controllers[index],
@@ -91,14 +93,18 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             maxLength: 1,
-                            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               counterText: "",
                             ),
                             onChanged: (value) {
                               if (value.length == 1 && index < 4) {
-                                FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                                FocusScope.of(context)
+                                    .requestFocus(focusNodes[index + 1]);
                               }
                             },
                           ),
@@ -107,21 +113,21 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
                     }),
                   ),
                   const Gap(27),
-                  ElevatedButton(
-                    onPressed: () {
-                      Modular.to.navigate('/auth${const SucessfullAccountCreatedPage().ROUTE_NAME}');
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(Colors.black),
-                        fixedSize:
-                        MaterialStateProperty.all(const Size(220, 40))),
-                    child: const Text("Verificar",
-                        style: TextStyle(fontSize: 18, color: Colors.white)),
-                  ),
+                  DailyButton(
+                      text: DailyText.text("Verificar").body.large.neutral,
+                      onPressed: () {
+                        Modular.to.navigate(
+                            '/auth${const SucessfullAccountCreatedPage().ROUTE_NAME}');
+                      }),
                   const Gap(27),
-                  const Text("Não recebeu nenhum código? Enviar novamente", style: TextStyle(fontWeight: FontWeight.bold),),
-                  const Text("Enviar novo código em 00:30s", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),)
+                  const Text(
+                    "Não recebeu nenhum código? Enviar novamente",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    "Enviar novo código em 00:30s",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                  )
                 ],
               ),
             ),
@@ -131,11 +137,12 @@ class _ConfirmEmailCodePageState extends State<ConfirmEmailCodePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Modular.to.navigate('/auth${const AccountCreationPage().ROUTE_NAME}');
+            Modular.to
+                .navigate('/auth${const AccountCreationPage().ROUTE_NAME}');
           },
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromRGBO(53, 56, 63, 1),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: const Icon(Icons.arrow_back_outlined, color: Colors.white)),
     );
   }

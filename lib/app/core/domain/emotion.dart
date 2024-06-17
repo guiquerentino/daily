@@ -1,28 +1,28 @@
 import 'dart:convert';
 
-class Registro {
+import 'package:daily/app/core/domain/tags.dart';
+
+class Emotion {
   int? id;
   int? ownerId;
   String? text;
   List<Comment>? comments;
   EMOTION_TYPE? emotionType;
-  WEATHER_TYPE? weatherType;
-  DateTime? dataHoraCriacao;
-  List<String>? tags;
+  DateTime? creationDate;
+  List<Tags>? tags;
 
-  Registro({
+  Emotion({
     this.id,
     this.ownerId,
     this.text,
     this.emotionType,
-    this.weatherType,
-    this.dataHoraCriacao,
+    this.creationDate,
     this.tags,
     this.comments,
   });
 
-  factory Registro.fromJson(Map<String, dynamic> json) {
-    return Registro(
+  factory Emotion.fromJson(Map<String, dynamic> json) {
+    return Emotion(
       id: json['id'],
       ownerId: json['ownerId'],
       text: json['text'],
@@ -32,17 +32,12 @@ class Registro {
       emotionType: json['emotionType'] != null
           ? EMOTION_TYPE.values.firstWhere(
               (e) => e.toString() == 'EMOTION_TYPE.${json['emotionType']}',
-          orElse: () => EMOTION_TYPE.FELICIDADE)
+          orElse: () => EMOTION_TYPE.FELIZ)
           : null,
-      weatherType: json['weatherType'] != null
-          ? WEATHER_TYPE.values.firstWhere(
-              (e) => e.toString() == 'WEATHER_TYPE.${json['weatherType']}',
-          orElse: () => WEATHER_TYPE.ENSOLARADO)
+      creationDate: json['creationDate'] != null
+          ? DateTime.parse(json['creationDate'])
           : null,
-      dataHoraCriacao: json['dataHoraCriacao'] != null
-          ? DateTime.parse(json['dataHoraCriacao'])
-          : null,
-      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as Tags).toList(),
     );
   }
 
@@ -53,20 +48,19 @@ class Registro {
       'text': text,
       'comments': comments?.map((e) => e.toJson()).toList(),
       'emotionType': emotionType?.toString().split('.').last,
-      'weatherType': weatherType?.toString().split('.').last,
-      'dataHoraCriacao': dataHoraCriacao?.toIso8601String(),
-      'tags': tags,
+      'creationDate': creationDate?.toIso8601String(),
+      'tags': tags?.map((e) => e.toJson()).toList(),
     };
   }
 
-  static Registro fromUtf8Json(String jsonString) {
+  static Emotion fromUtf8Json(String jsonString) {
     final decodedBytes = utf8.decode(jsonString.codeUnits);
     final Map<String, dynamic> jsonData = json.decode(decodedBytes);
-    return Registro.fromJson(jsonData);
+    return Emotion.fromJson(jsonData);
   }
 
-  static List<Registro> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((json) => Registro.fromJson(json as Map<String, dynamic>)).toList();
+  static List<Emotion> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => Emotion.fromJson(json as Map<String, dynamic>)).toList();
   }
 }
 
@@ -105,25 +99,10 @@ class Comment {
 }
 
 enum EMOTION_TYPE {
-  FELICIDADE,
-  ANSIEDADE,
-  TEDIO,
-  TRISTEZA,
-  CONFUSAO,
-  DECEPCAO,
-  FOCO,
-  APATICO,
-  SURPRESA,
-  CANSASO,
-  MOTIVADO,
-  ANIMACAO,
+  BRAVO,
+  TRISTE,
+  FELIZ,
+  NORMAL,
+  MUITO_FELIZ,
 }
 
-enum WEATHER_TYPE {
-  ENSOLARADO,
-  CHUVOSO,
-  NUBLADO,
-  TEMPESTUOSO,
-  FRIO,
-  LIMPO,
-}

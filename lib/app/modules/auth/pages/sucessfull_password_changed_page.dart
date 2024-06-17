@@ -12,7 +12,7 @@ class SucessfullPasswordChangedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(15, 15, 15, 1),
+      backgroundColor: Color.fromRGBO(118, 136, 91, 1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -21,11 +21,17 @@ class SucessfullPasswordChangedPage extends StatelessWidget {
             const Gap(15),
             const Text(
               "Sucesso",
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22),
             ),
             const Text(
               "Senha alterada com sucesso!",
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
             ),
           ],
         ),
@@ -34,9 +40,9 @@ class SucessfullPasswordChangedPage extends StatelessWidget {
           onPressed: () {
             Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
-          backgroundColor: Colors.black,
+          backgroundColor: const Color.fromRGBO(53, 56, 63, 1),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: const Icon(Icons.arrow_forward, color: Colors.white)),
     );
   }

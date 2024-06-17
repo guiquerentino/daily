@@ -1,5 +1,7 @@
 import 'package:daily/app/modules/auth/pages/login_page.dart';
 import 'package:daily/app/modules/auth/pages/sucessfull_password_changed_page.dart';
+import 'package:daily/app/modules/ui/DailyButton.dart';
+import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
@@ -84,7 +86,7 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
                                   blurRadius: 3)
                             ],
                             borderRadius:
-                            BorderRadius.all(Radius.circular(10))),
+                                BorderRadius.all(Radius.circular(10))),
                         child: Center(
                           child: TextField(
                             controller: controllers[index],
@@ -92,14 +94,18 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
                             keyboardType: TextInputType.number,
                             textAlign: TextAlign.center,
                             maxLength: 1,
-                            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               counterText: "",
                             ),
                             onChanged: (value) {
                               if (value.length == 1 && index < 4) {
-                                FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                                FocusScope.of(context)
+                                    .requestFocus(focusNodes[index + 1]);
                               }
                             },
                           ),
@@ -108,24 +114,23 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
                     }),
                   ),
                   const Gap(27),
-                  ElevatedButton(
-                    onPressed: () {
-                      String code = controllers.map((e) => e.text).join();
+                  DailyButton(
+                      text: DailyText.text("Verificar").body.large.neutral,
+                      onPressed: () {
+                        String code = controllers.map((e) => e.text).join();
 
-                      Modular.to.navigate('/auth${const SucessfullPasswordChangedPage().ROUTE_NAME}');
-                    },
-                    style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(Colors.black),
-                        fixedSize:
-                        MaterialStateProperty.all(const Size(220, 40))),
-                    child: const Text("Verificar",
-                        style: TextStyle(fontSize: 18, color: Colors.white)),
-                  ),
+                        Modular.to.navigate(
+                            '/auth${const SucessfullPasswordChangedPage().ROUTE_NAME}');
+                      }),
                   const Gap(27),
-                  const Text("Não recebeu nenhum código? Enviar novamente", style: TextStyle(fontWeight: FontWeight.bold),),
-                  const Text("Enviar novo código em 00:30s", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),)
-
+                  const Text(
+                    "Não recebeu nenhum código? Enviar novamente",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const Text(
+                    "Enviar novo código em 00:30s",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+                  )
                 ],
               ),
             ),
@@ -137,9 +142,9 @@ class _PasswordCodeVerificationState extends State<PasswordCodeVerification> {
           onPressed: () {
             Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromRGBO(53, 56, 63, 1),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: const Icon(Icons.arrow_back_outlined, color: Colors.white)),
     );
   }

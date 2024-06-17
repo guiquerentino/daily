@@ -1,40 +1,25 @@
-class AccountRequest {
+class Account {
   int? id;
   int accountType;
   String email;
   String? password;
-  String? fullName;
-  String? age;
-  String? phoneNumber;
-  String? personalDocument;
-  String? professionalDocument;
-  bool? canAttend;
+  String fullName;
 
-  AccountRequest({
+  Account({
     this.id,
     required this.accountType,
     required this.email,
     required this.password,
-    this.fullName,
-    this.age,
-    this.phoneNumber,
-    this.personalDocument,
-    this.professionalDocument,
-    this.canAttend,
+    required this.fullName,
   });
 
-  factory AccountRequest.fromJson(Map<String, dynamic> json) {
-    return AccountRequest(
+  factory Account.fromJson(Map<String, dynamic> json) {
+    return Account(
       id: json['id'],
       accountType: _getAccountTypeFromString(json['accountType']),
       email: json['email'],
       password: json['password'],
       fullName: json['fullName'],
-      age: json['age'],
-      phoneNumber: json['phoneNumber'],
-      personalDocument: json['personalDocument'],
-      professionalDocument: json['professionalDocument'],
-      canAttend: json['canAttend'],
     );
   }
 
@@ -45,11 +30,6 @@ class AccountRequest {
       'email': email,
       'password': password,
       'fullName': fullName,
-      'age': age,
-      'phoneNumber': phoneNumber,
-      'personalDocument': personalDocument,
-      'professionalDocument': professionalDocument,
-      'canAttend': canAttend,
     };
   }
 

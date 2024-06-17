@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'daily_page_view.dart';
-
 class DailyBottomNavigationBar extends StatefulWidget {
-  final Function reloadRegistro;
-
-  const DailyBottomNavigationBar({super.key, required this.reloadRegistro});
+  const DailyBottomNavigationBar({Key? key}) : super(key: key);
 
   @override
   State<DailyBottomNavigationBar> createState() =>
@@ -14,83 +10,68 @@ class DailyBottomNavigationBar extends StatefulWidget {
 }
 
 class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
-  void _showEmotionBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return DailyPageView(
-            reloadRegistro: widget.reloadRegistro,
-          );
-        });
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: NavigationBar(
-            height: constraints.maxHeight * 0.12,
-            elevation: 0.5,
-            backgroundColor: Colors.white,
-            destinations: [
-              const NavigationDestination(
-                  icon: Icon(Iconsax.home,
-                      size: 30, color: Color.fromRGBO(55, 52, 57, 1)),
-                  label: "Home"),
-              const NavigationDestination(
-                  icon: Icon(Iconsax.chart_21,
-                      size: 30, color: Color.fromRGBO(55, 52, 57, 1)),
-                  label: "Estatísticas"),
-              NavigationDestination(
-                  icon: PopupMenuButton(
-                    offset: const Offset(-50, -170),
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuEntry<String>>[
-                      const PopupMenuItem<String>(
-                        value: 'emocao',
-                        child: Text('Adicionar Emoção'),
-                      ),
-                      const PopupMenuItem<String>(
-                        value: 'meta',
-                        child: Text('Adicionar Meta'),
-                      ),
-                      const PopupMenuItem<String>(
-                        value: 'lembrete',
-                        child: Text('Adicionar Lembrete'),
-                      ),
-                    ],
-                    elevation: 0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: const Icon(Iconsax.add,
-                          size: 30, color: Colors.white),
-                    ),
-                    onSelected: (value) {
-                      if (value == 'emocao') {
-                        _showEmotionBottomSheet(context);
-                      }
-                    },
-                  ),
-                  label: "Adicionar"),
-              const NavigationDestination(
-                  icon: Icon(Icons.psychology_alt_outlined,
-                      size: 35, color: Color.fromRGBO(55, 52, 57, 1)),
-                  label: "Saúde"),
-              const NavigationDestination(
-                  icon: Icon(Iconsax.profile_2user4,
-                      size: 30, color: Color.fromRGBO(55, 52, 57, 1)),
-                  label: "Perfil"),
-            ],
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 3)
           ),
-        );
-      },
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(
+         100
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed, // Fixa o tipo
+          elevation: 0, // Remove a sombra padrão do BottomNavigationBar
+          backgroundColor: Colors.transparent, // Define o fundo como transparente para usar o container
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Iconsax.home, size: 30),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Iconsax.map, size: 30),
+              label: 'Explorar',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Iconsax.health, size: 30),
+              label: 'Saúde',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Iconsax.status_up, size: 30),
+              label: 'Histórico',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Iconsax.user, size: 30),
+              label: 'Perfil',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Color.fromRGBO(158, 181, 103, 1),
+          onTap: _onItemTapped,
+        ),
+      ),
     );
   }
 }

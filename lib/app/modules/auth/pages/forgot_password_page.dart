@@ -1,10 +1,13 @@
+import 'package:daily/app/core/domain/external/change_password_request.dart';
 import 'package:daily/app/modules/auth/pages/password_code_verification_page.dart';
+import 'package:daily/app/modules/ui/DailyButton.dart';
+import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart';
 import '../components/daily_login_app_bar.dart';
-import '../../../core/domain/account_request.dart';
+import '../../../core/domain/account.dart';
 import '../http/auth_http.dart';
 import 'login_page.dart';
 
@@ -25,7 +28,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   bool erroTrocarSenha = false;
   bool mostrarSenha = false;
   bool mostrarSenhaConfirm = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +103,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: "Senha",
+                                hintText: "Senha nova",
                                 filled: true,
                                 border: const OutlineInputBorder(
                                     borderRadius:
@@ -130,7 +132,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               return null;
                             },
                             decoration: InputDecoration(
-                                hintText: "Confirme sua senha",
+                                hintText: "Confirme sua senha nova",
                                 filled: true,
                                 border: const OutlineInputBorder(
                                     borderRadius:
@@ -155,35 +157,31 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               style: TextStyle(color: Colors.red),
                             ),
                           const Gap(30),
-                          FilledButton(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                AccountRequest request = AccountRequest(
-                                    accountType: 0,
-                                    email: _emailController.text,
-                                    password: _passwordController.text);
+                          DailyButton(
+                              text: DailyText.text("Redefinir")
+                                  .neutral
+                                  .body
+                                  .large,
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  ChangePasswordRequest request =
+                                      ChangePasswordRequest(
+                                          email: _emailController.text,
+                                          password: _passwordController.text);
 
-                                Response response = await AuthHttp()
-                                    .changePassword(request);
+                                  Response response =
+                                      await AuthHttp().changePassword(request);
 
-                                if (response.statusCode == 200) {
-                                  Modular.to.navigate('/auth${const PasswordCodeVerification().ROUTE_NAME}');
-
-                                } else {
-                                  setState(() {
-                                    erroTrocarSenha = true;
-                                  });
+                                  if (response.statusCode == 200) {
+                                    Modular.to.navigate(
+                                        '/auth${const PasswordCodeVerification().ROUTE_NAME}');
+                                  } else {
+                                    setState(() {
+                                      erroTrocarSenha = true;
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                            style: const ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll(Colors.black),
-                                fixedSize:
-                                    MaterialStatePropertyAll(Size(220, 40))),
-                            child: const Text("Redefinir",
-                                style: TextStyle(fontSize: 18)),
-                          ),
+                              })
                         ],
                       ),
                     ),
@@ -202,7 +200,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           onPressed: () {
             Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
           },
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromRGBO(53, 56, 63, 1),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: const Icon(Icons.arrow_back_outlined,

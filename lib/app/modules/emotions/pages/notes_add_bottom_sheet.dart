@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../../core/domain/Registro.dart';
+import 'package:provider/provider.dart';
+import '../../../core/domain/account.dart';
+import '../../../core/domain/emotion.dart';
+import '../../../core/domain/providers/account_provider.dart';
 import '../http/emotions_http.dart';
 
-class NotasAddBottomSheet extends StatefulWidget {
+class NotesAddBottomSheet extends StatefulWidget {
   final PageController pageController;
-  final Registro registro;
-  final Function reloadRegistros;
+  final Emotion emotion;
 
-  const NotasAddBottomSheet(
-      {Key? key, required this.pageController, required this.registro, required this.reloadRegistros})
+  const NotesAddBottomSheet(
+      {Key? key, required this.pageController, required this.emotion})
       : super(key: key);
 
   @override
-  State<NotasAddBottomSheet> createState() => _NotasAddBottomSheetState();
+  State<NotesAddBottomSheet> createState() => _NotasAddBottomSheetState();
 }
 
-class _NotasAddBottomSheetState extends State<NotasAddBottomSheet> {
+class _NotasAddBottomSheetState extends State<NotesAddBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   final _notaController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Account? account = Provider.of<AccountProvider>(context).account;
+
     return FractionallySizedBox(
       widthFactor: 1,
       heightFactor: 0.9,
@@ -44,10 +53,6 @@ class _NotasAddBottomSheetState extends State<NotasAddBottomSheet> {
                               duration: const Duration(milliseconds: 400),
                               curve: Curves.easeOut);
                         },
-                      ),
-                      const Text(
-                        "3/3",
-                        style: TextStyle(fontSize: 26, fontFamily: 'Pangram'),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -133,12 +138,11 @@ class _NotasAddBottomSheetState extends State<NotasAddBottomSheet> {
                                   MaterialStatePropertyAll(Size(220, 40)),
                             ),
                             onPressed: () async {
-                              widget.registro.text = _notaController.text;
+                              widget.emotion.text = _notaController.text;
+                              widget.emotion.ownerId = account!.id;
 
-                              await RegistroHttp()
-                                  .salvarRegistro(widget.registro);
-
-                              widget.reloadRegistros();
+                              await EmotionsHttp()
+                                  .saveRegister(widget.emotion);
 
                               Navigator.of(context).pop();
                             },
