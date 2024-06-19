@@ -4,67 +4,39 @@ import '../domain/emotion.dart';
 
 
 class EmojisUtils {
+
+  static String retornaNomeFormatadoEmocao(EMOTION_TYPE emotionType) {
+    switch (emotionType) {
+      case EMOTION_TYPE.MUITO_FELIZ:
+        return "Muito Feliz";
+      case EMOTION_TYPE.FELIZ:
+        return "Feliz";
+      case EMOTION_TYPE.NORMAL:
+        return "Normal";
+      case EMOTION_TYPE.TRISTE:
+        return "Triste";
+      case EMOTION_TYPE.BRAVO:
+        return "Bravo";
+    }
   }
 
-  // String retornaNomeFormatadoEmocao(EMOTION_TYPE emotionType){
-  //   switch (emotionType) {
-  //     case EMOTION_TYPE.FELICIDADE:
-  //       return "Felicidade";
-  //     case EMOTION_TYPE.ANSIEDADE:
-  //       return "Ansiedade";
-  //     case EMOTION_TYPE.TEDIO:
-  //       return "Tédio";
-  //     case EMOTION_TYPE.TRISTEZA:
-  //       return "Tristeza";
-  //     case EMOTION_TYPE.CONFUSAO:
-  //       return "Confusão";
-  //     case EMOTION_TYPE.ANIMACAO:
-  //       return "Animação";
-  //     case EMOTION_TYPE.DECEPCAO:
-  //       return "Decepção";
-  //     case EMOTION_TYPE.FOCO:
-  //       return "Foco";
-  //     case EMOTION_TYPE.APATICO:
-  //       return "Apático";
-  //     case EMOTION_TYPE.SURPRESA:
-  //       return "Surpresa";
-  //     case EMOTION_TYPE.CANSASO:
-  //       return "Cansaço";
-  //     case EMOTION_TYPE.MOTIVADO:
-  //       return "Motivado";
-  //   }
-  //}
+Image retornaEmojiEmocao(EMOTION_TYPE emotionType, bool big) {
+  double size = big ? 90 : 60;
 
-  // Image retornaEmojiEmocao(EMOTION_TYPE emotionType, bool big) {
-  //   double size = big ? 90 : 60;
-  //
-  //   switch (emotionType) {
-  //     case EMOTION_TYPE.FELICIDADE:
-  //       return Image.asset("assets/emoji_felicidade.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.ANSIEDADE:
-  //       return Image.asset("assets/emoji_ansiedade.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.TEDIO:
-  //       return Image.asset("assets/emoji_tedio.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.TRISTEZA:
-  //       return Image.asset("assets/emoji_tristeza.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.CONFUSAO:
-  //       return Image.asset("assets/emoji_confusao.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.ANIMACAO:
-  //       return Image.asset("assets/emoji_animacao.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.DECEPCAO:
-  //       return Image.asset("assets/emoji_decepcao.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.FOCO:
-  //       return Image.asset("assets/emoji_foco.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.APATICO:
-  //       return Image.asset("assets/emoji_apatico.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.SURPRESA:
-  //       return Image.asset("assets/emoji_surpresa.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.CANSASO:
-  //       return Image.asset("assets/emoji_cansaso.png", height: size, width: size, fit: BoxFit.fill);
-  //     case EMOTION_TYPE.MOTIVADO:
-  //       return Image.asset("assets/emoji_motivado.png", height: size, width: size, fit: BoxFit.fill);
-  //     default:
-  //       return Image.asset("assets/emoji_default.png", height: size, width: size, fit: BoxFit.fill); // Uma imagem padrão caso emotionType não corresponda a nenhum caso
-  //   }
-//   }
-// }
+  switch (emotionType) {
+    case EMOTION_TYPE.FELIZ:
+      return Image.asset("assets/emoji_felicidade.png", height: size, width: size, fit: BoxFit.fill);
+    case EMOTION_TYPE.BRAVO:
+      return Image.asset("assets/emoji_bravo.png", height: size, width: size, fit: BoxFit.fill);
+    case EMOTION_TYPE.TRISTE:
+      return Image.asset("assets/emoji_triste.png", height: size, width: size, fit: BoxFit.fill);
+    case EMOTION_TYPE.NORMAL:
+      return Image.asset("assets/emoji_normal.png", height: size, width: size, fit: BoxFit.fill);
+    case EMOTION_TYPE.MUITO_FELIZ:
+      return Image.asset("assets/emoji_muito_feliz.png", height: size, width: size, fit: BoxFit.fill);
+    default:
+      return Image.asset("assets/emoji_default.png", height: size, width: size, fit: BoxFit.fill); // Uma imagem padrão caso emotionType não corresponda a nenhum caso
+  }
+  }
+}
+

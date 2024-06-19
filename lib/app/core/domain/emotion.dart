@@ -31,13 +31,16 @@ class Emotion {
           .toList(),
       emotionType: json['emotionType'] != null
           ? EMOTION_TYPE.values.firstWhere(
-              (e) => e.toString() == 'EMOTION_TYPE.${json['emotionType']}',
-          orElse: () => EMOTION_TYPE.FELIZ)
+            (e) => e.toString() == 'EMOTION_TYPE.${json['emotionType']}',
+        orElse: () => EMOTION_TYPE.FELIZ,
+      )
           : null,
       creationDate: json['creationDate'] != null
           ? DateTime.parse(json['creationDate'])
           : null,
-      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as Tags).toList(),
+      tags: (json['tags'] as List<dynamic>?)
+          ?.map((tagJson) => Tags.fromJson(tagJson as Map<String, dynamic>))
+          .toList(),
     );
   }
 
@@ -52,6 +55,7 @@ class Emotion {
       'tags': tags?.map((e) => e.toJson()).toList(),
     };
   }
+
 
   static Emotion fromUtf8Json(String jsonString) {
     final decodedBytes = utf8.decode(jsonString.codeUnits);

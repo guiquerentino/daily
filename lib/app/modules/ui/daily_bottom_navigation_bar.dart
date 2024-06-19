@@ -1,5 +1,13 @@
+import 'package:daily/app/core/domain/providers/bottom_navigation_bar_provider.dart';
+import 'package:daily/app/modules/emotions/pages/emotions_history_page.dart';
+import 'package:daily/app/modules/emotions/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
+// Declare a GlobalKey for the BottomNavigationBar
+final GlobalKey<_DailyBottomNavigationBarState> bottomNavigationBarKey = GlobalKey<_DailyBottomNavigationBarState>();
 
 class DailyBottomNavigationBar extends StatefulWidget {
   const DailyBottomNavigationBar({Key? key}) : super(key: key);
@@ -10,16 +18,11 @@ class DailyBottomNavigationBar extends StatefulWidget {
 }
 
 class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    final indexNavigation = Provider.of<BottomNavigationBarProvider>(context);
+
     return Container(
       height: 80,
       decoration: BoxDecoration(
@@ -33,17 +36,15 @@ class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3)
+            offset: Offset(0, 3),
           ),
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(
-         100
-        ),
+        borderRadius: BorderRadius.circular(100),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed, // Fixa o tipo
-          elevation: 0, // Remove a sombra padrão do BottomNavigationBar
+          elevation: 0,
           backgroundColor: Colors.transparent, // Define o fundo como transparente para usar o container
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -67,9 +68,23 @@ class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
               label: 'Perfil',
             ),
           ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Color.fromRGBO(158, 181, 103, 1),
-          onTap: _onItemTapped,
+          currentIndex: indexNavigation.selectedIndex,
+          selectedItemColor: const Color.fromRGBO(158, 181, 103, 1),
+          onTap: (index) {
+            indexNavigation.selectedIndex = index;
+
+            switch (index) {
+              case 0:
+                Modular.to.navigate('/emotions${HomePage.ROUTE_NAME}');
+                break;
+              case 3:
+                Modular.to.navigate('/emotions${EmotionsHistoryPage.ROUTE_NAME}');
+                break;
+              default:
+                break;
+            }
+
+          },
         ),
       ),
     );

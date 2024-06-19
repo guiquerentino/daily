@@ -21,6 +21,8 @@ dependencies:
   iconsax: ^0.0.8
   flutter_modular: ^6.3.3
   provider: ^6.1.2
+  flutter_dash: ^1.0.0
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +38,8 @@ flutter:
     - assets/raccoon.svg
     - assets/emoji_felicidade.png
     - assets/emoji_tristeza.png
+    - assets/meta_concluida.png
+    - assets/registro_concluido.png
     - assets/chat.png
     - assets/emoji_normal.png
     - assets/emoji_muito_feliz.png

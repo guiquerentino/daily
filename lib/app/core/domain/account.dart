@@ -3,7 +3,7 @@ class Account {
   int accountType;
   String email;
   String? password;
-  String fullName;
+  String? fullName;
 
   Account({
     this.id,

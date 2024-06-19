@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 import '../components/daily_login_app_bar.dart';
-import '../../../core/domain/account.dart';
 import '../http/auth_http.dart';
 
 class AccountCreationPage extends StatefulWidget {
@@ -24,7 +23,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _newPasswordController = TextEditingController();
-  final _nameController = TextEditingController();
   bool mostrarSenha = false;
   bool mostrarSenhaConfirm = false;
 
@@ -92,25 +90,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                     borderSide: BorderSide.none),
                                 fillColor: Color.fromRGBO(196, 196, 196, 0.20),
                                 suffixIcon: Icon(Icons.email_outlined)),
-                          ),
-                          const Gap(15),
-                          TextFormField(
-                            controller: _nameController,
-                            validator: (value) {
-                              if (value == null || value == '') {
-                                return 'Por favor, digite um nome válido.';
-                              }
-                              return null;
-                            },
-                            decoration: const InputDecoration(
-                                hintText: "Nome",
-                                filled: true,
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide.none),
-                                fillColor: Color.fromRGBO(196, 196, 196, 0.20),
-                                suffixIcon: Icon(Icons.abc_sharp)),
                           ),
                           const Gap(15),
                           TextFormField(
@@ -184,7 +163,6 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                       CreateAccountRequest(
                                           email: _emailController.text,
                                           password: _passwordController.text,
-                                          fullName: _nameController.text,
                                           accountType: 0);
 
                                   AuthHttp().createAccount(request);

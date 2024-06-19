@@ -39,6 +39,8 @@ class _SplashPageState extends State<SplashPage> {
 
         Modular.to.navigate('/emotions${HomePage.ROUTE_NAME}',
             arguments: Account.fromJson(jsonDecode(response.body)));
+      } else {
+        Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
       }
     } else {
       Modular.to.navigate('/auth${const LoginPage().ROUTE_NAME}');
