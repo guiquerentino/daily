@@ -1,5 +1,6 @@
 import 'package:daily/app/modules/emotions/components/daily_drawer.dart';
 import 'package:daily/app/modules/emotions/components/daily_emotions_calendar.dart';
+import 'package:daily/app/modules/emotions/components/daily_emotions_chart.dart';
 import 'package:daily/app/modules/emotions/components/daily_emotions_registers.dart';
 import 'package:daily/app/modules/emotions/components/daily_emotions_scoreboard.dart';
 import 'package:daily/app/modules/ui/daily_app_bar.dart';
@@ -53,11 +54,11 @@ class _HomePageState extends State<EmotionsHistoryPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               DailyAppBar(title: "Histórico"),
-              Divider(),
               Gap(10),
               DailyEmotionsCalendar(),
               Gap(10),
               DailyEmotionRegisters(),
+              DailyEmotionsCharts(),
               DailyEmotionsScoreboard(),
             ],
           ),
@@ -66,3 +67,4 @@ class _HomePageState extends State<EmotionsHistoryPage> {
     );
   }
 }
+

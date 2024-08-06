@@ -29,7 +29,7 @@ Image retornaEmojiEmocao(EMOTION_TYPE emotionType, bool big) {
     case EMOTION_TYPE.BRAVO:
       return Image.asset("assets/emoji_bravo.png", height: size, width: size, fit: BoxFit.fill);
     case EMOTION_TYPE.TRISTE:
-      return Image.asset("assets/emoji_triste.png", height: size, width: size, fit: BoxFit.fill);
+      return Image.asset("assets/emoji_tristeza.png", height: size, width: size, fit: BoxFit.fill);
     case EMOTION_TYPE.NORMAL:
       return Image.asset("assets/emoji_normal.png", height: size, width: size, fit: BoxFit.fill);
     case EMOTION_TYPE.MUITO_FELIZ:

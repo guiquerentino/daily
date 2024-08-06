@@ -1,3 +1,4 @@
+import 'package:daily/app/core/utils/emoji_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -141,10 +142,87 @@ class _NotasAddBottomSheetState extends State<NotesAddBottomSheet> {
                               widget.emotion.text = _notaController.text;
                               widget.emotion.ownerId = account!.id;
 
-                              await EmotionsHttp()
-                                  .saveRegister(widget.emotion);
+                              await EmotionsHttp().saveRegister(widget.emotion);
 
-                              Navigator.of(context).pop();
+                              if (mounted) {
+                                Navigator.of(context).pop();
+
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                            width: 80,
+                                            height: 80,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.orange.shade200,
+                                                  Colors.pink.shade100
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: EmojisUtils().retornaEmojiEmocao(EMOTION_TYPE.MUITO_FELIZ,false)
+                                            ),
+                                          ),
+                                          const SizedBox(height: 20),
+                                          const Text(
+                                            'Você está no caminho certo!',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: 'Pangram',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          const Text(
+                                            'Continue realizando registros e entenda melhor suas emoções',
+                                            textAlign: TextAlign.center, style: TextStyle(fontFamily: 'Pangram', fontSize: 14),
+                                          ),
+                                          const SizedBox(height: 30),
+                                        ],
+                                      ),
+                                      actions: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                              alignment: Alignment.center,
+                                              width: double.maxFinite,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromRGBO(
+                                                    158, 181, 103, 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: const Text("Continuar",
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontFamily: 'Pangram',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center)),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
                             },
                             child: const Text(
                               "Finalizar",

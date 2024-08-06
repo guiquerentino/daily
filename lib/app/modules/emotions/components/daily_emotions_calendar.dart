@@ -14,22 +14,29 @@ class DailyEmotionsCalendar extends StatefulWidget {
 
 class _DailyEmotionsCalendarState extends State<DailyEmotionsCalendar> {
   final ScrollController _scrollController = ScrollController();
-  DateTime dataSelecionada = DateTime.now();
+  late DateTime dataSelecionada;
   DateTime dataAtual = DateTime.now();
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('pt_BR', null);
+
+    final selectedDateProvider =
+    Provider.of<CalendarDateProvider>(context,
+        listen: false);
+
+    dataSelecionada = selectedDateProvider.selectedDate;
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToToday();
     });
   }
 
   void _scrollToToday() {
-    int diaAtual = dataAtual.day;
-    double offset = (diaAtual - 1) * 58.0;
-    _scrollController.jumpTo(offset);
+      int diaAtual = dataSelecionada.day;
+      double offset = (diaAtual - 1) * 58.0;
+      _scrollController.jumpTo(offset);
   }
 
   void _incrementMonth() {
@@ -61,7 +68,7 @@ class _DailyEmotionsCalendarState extends State<DailyEmotionsCalendar> {
                 onPressed: _decrementMonth,
                 icon: Icon(Icons.arrow_back_ios_new, size: 18)),
             Text(mesAnoAtual,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'Pangram',
                     fontWeight: FontWeight.bold)),
@@ -159,5 +166,9 @@ class _DailyEmotionsCalendarState extends State<DailyEmotionsCalendar> {
 class DateUtils {
   static int getDaysInMonth(int year, int month) {
     return DateTime(year, month + 1, 0).day;
+  }
+
+  static String formatDate(String date) {
+    return date.split('-').first;
   }
 }

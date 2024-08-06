@@ -47,7 +47,7 @@ class DailyDrawer extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Usuario',
+                             const Text("Usuário",
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.start),

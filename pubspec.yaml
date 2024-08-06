@@ -23,6 +23,9 @@ dependencies:
   provider: ^6.1.2
   flutter_dash: ^1.0.0
   percent_indicator: ^4.2.3
+  fl_chart: ^0.68.0
+  dashed_line: ^0.1.0+3
+  syncfusion_flutter_gauges: 24.2.5
 
 dev_dependencies:
   flutter_test:

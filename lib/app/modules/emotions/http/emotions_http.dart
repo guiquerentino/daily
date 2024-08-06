@@ -4,13 +4,12 @@ import 'package:intl/intl.dart';
 
 import '../../../core/domain/emotion.dart';
 
-
 class EmotionsHttp {
-
   Future<List<Emotion>> fetchRegister(int? ownerId, DateTime dataHora) async {
     final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(dataHora);
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:8080/api/v1/emotions/user/$ownerId?date=$formattedDate'),
+      Uri.parse(
+          'http://10.0.2.2:8080/api/v1/emotions/user/$ownerId?date=$formattedDate'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -26,12 +25,24 @@ class EmotionsHttp {
   }
 
   Future<void> saveRegister(Emotion request) async {
-    final response = await http.post(
-      Uri.parse('http://10.0.2.2:8080/api/v1/emotions'),
+    final response =
+        await http.post(Uri.parse('http://10.0.2.2:8080/api/v1/emotions'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(request.toJson()));
+  }
+
+  Future<void> deleteRegister(int emotionId) async {
+    final response = await http.delete(
+      Uri.parse('http://10.0.2.2:8080/api/v1/emotions/$emotionId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(request.toJson())
     );
+
+    if (response.statusCode != 200) {
+      throw new Exception("Error deleting emotion");
+    }
   }
 }
