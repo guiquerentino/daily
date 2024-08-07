@@ -26,6 +26,8 @@ dependencies:
   fl_chart: ^0.68.0
   dashed_line: ^0.1.0+3
   syncfusion_flutter_gauges: 24.2.5
+  flutter_bloc: ^8.1.6
+  numberpicker: ^2.1.2
 
 dev_dependencies:
   flutter_test:

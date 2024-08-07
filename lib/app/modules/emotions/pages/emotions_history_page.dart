@@ -25,20 +25,6 @@ class _HomePageState extends State<EmotionsHistoryPage> {
     return DateFormat('E, d MMM', 'pt_BR').format(date);
   }
 
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? picked = await showDatePicker(
-  //     context: context,
-  //     firstDate: DateTime(2000),
-  //     lastDate: DateTime.now(),
-  //   );
-  //   if (picked != null && picked != dataSelecionada) {
-  //     setState(() {
-  //       dataSelecionada = picked;
-  //       dataSelecionadaIndex = -1;
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
 
@@ -58,7 +44,6 @@ class _HomePageState extends State<EmotionsHistoryPage> {
               DailyEmotionsCalendar(),
               Gap(10),
               DailyEmotionRegisters(),
-              DailyEmotionsCharts(),
               DailyEmotionsScoreboard(),
             ],
           ),

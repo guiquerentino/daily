@@ -1,5 +1,3 @@
-import 'package:daily/app/core/domain/account.dart';
-import 'package:daily/app/core/domain/providers/account_provider.dart';
 import 'package:daily/app/modules/ui/daily_app_bar.dart';
 import 'package:daily/app/modules/ui/daily_bottom_navigation_bar.dart';
 import 'package:daily/app/modules/emotions/components/daily_drawer.dart';
@@ -8,6 +6,9 @@ import 'package:daily/app/modules/emotions/components/home_page_articles.dart';
 import 'package:daily/app/modules/emotions/components/home_page_plans.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/domain/account.dart';
+import '../../../core/domain/providers/account_provider.dart';
 
 class HomePage extends StatefulWidget {
   static String ROUTE_NAME = '/';

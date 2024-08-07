@@ -184,15 +184,22 @@ class _LoginPageState extends State<LoginPage> {
                                             _passwordController.text);
                                       }
 
+                                      Account account = Account.fromJson(
+                                          jsonDecode(response.body));
+
                                       Provider.of<AccountProvider>(context,
                                               listen: false)
-                                          .setAccount(Account.fromJson(
-                                              jsonDecode(response.body)));
+                                          .setAccount(account);
 
-                                      Modular.to.navigate(
-                                          '/emotions${HomePage.ROUTE_NAME}',
-                                          arguments: Account.fromJson(
-                                              jsonDecode(response.body)));
+                                      if (account.fullName == null ||
+                                          account.fullName!.isEmpty) {
+                                        Modular.to.navigate('/onboarding');
+                                      } else {
+                                        Modular.to.navigate(
+                                            '/emotions${HomePage.ROUTE_NAME}',
+                                            arguments: Account.fromJson(
+                                                jsonDecode(response.body)));
+                                      }
                                     } else {
                                       setState(() {
                                         erroLogin = true;

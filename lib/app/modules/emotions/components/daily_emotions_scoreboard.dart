@@ -44,12 +44,12 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 50 / 100,
+                        percent: 74 / 100,
                         center: RichText(
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '50\n',
+                                text: '74\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -80,12 +80,12 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 50 / 100,
+                        percent: 62 / 100,
                         center: RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '50\n',
+                                text: '62\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -116,12 +116,12 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 50 / 100,
+                        percent: 85 / 100,
                         center: RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '50\n',
+                                text: '85\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -152,12 +152,12 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 50 / 100,
+                        percent: 42 / 100,
                         center: RichText(
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '50\n',
+                                text: '42\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -188,12 +188,12 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 50 / 100,
+                        percent: 61 / 100,
                         center: RichText(
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '50\n',
+                                text: '61\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -224,12 +224,12 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 50 / 100,
+                        percent: 55 / 100,
                         center: RichText(
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '50\n',
+                                text: '55\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,

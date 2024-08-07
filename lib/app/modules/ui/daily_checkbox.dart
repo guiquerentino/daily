@@ -29,3 +29,4 @@ class _DailyCheckboxState extends State<DailyCheckbox> {
     );
   }
 }
+
