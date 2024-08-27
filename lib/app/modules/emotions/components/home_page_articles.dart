@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:daily/app/modules/articles/services/articles_service.dart';
 import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
 import '../../../core/domain/article.dart';
 
@@ -63,10 +65,17 @@ class _HomePageArticlesState extends State<HomePageArticles> {
     });
   }
 
+  String _decodeUtf8(String text) {
+    return utf8.decode(text.codeUnits);
+  }
+
   GestureDetector retornaContainerNoticia(int index) {
     if (articles.isEmpty) return GestureDetector();
 
     return GestureDetector(
+      onTap: () {
+        Modular.to.navigate('/articles/details?isFromList=false', arguments: articles[index]);
+      },
       onHorizontalDragEnd: (details) {
         _lidaComArrastoNoticia(details.primaryVelocity!);
       },
@@ -77,8 +86,8 @@ class _HomePageArticlesState extends State<HomePageArticles> {
           color: index == 0
               ? const Color.fromRGBO(158, 181, 103, 1)
               : index == 1
-                  ? const Color.fromRGBO(210, 151, 0, 1)
-                  : const Color.fromRGBO(131, 180, 255, 1),
+              ? const Color.fromRGBO(210, 151, 0, 1)
+              : const Color.fromRGBO(131, 180, 255, 1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -89,7 +98,7 @@ class _HomePageArticlesState extends State<HomePageArticles> {
               alignment: Alignment.center,
               height: 150,
               width: 177,
-              child: DailyText.text(articles.elementAt(index).title)
+              child: DailyText.text(_decodeUtf8(articles.elementAt(index).title))
                   .header
                   .small
                   .bold
@@ -99,8 +108,8 @@ class _HomePageArticlesState extends State<HomePageArticles> {
               index == 0
                   ? "assets/article_illustration.png"
                   : index == 1
-                      ? "assets/article_illustration2.png"
-                      : "assets/article_illustration3.png",
+                  ? "assets/article_illustration2.png"
+                  : "assets/article_illustration3.png",
               fit: BoxFit.fill,
             ),
           ],

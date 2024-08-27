@@ -30,7 +30,7 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             DailyText.text("Área de desenvolvimento").header.small.bold,
-            Divider(),
+            const Divider(),
             Container(
               alignment: Alignment.center,
               child: Wrap(

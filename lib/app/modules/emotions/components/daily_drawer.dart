@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/domain/account.dart';
 import '../../../core/domain/providers/account_provider.dart';
+import '../../../core/domain/providers/bottom_navigation_bar_provider.dart';
 import '../../auth/pages/login_page.dart';
 
 class DailyDrawer extends StatelessWidget {
@@ -18,6 +19,7 @@ class DailyDrawer extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Drawer(
+
       backgroundColor: Colors.white,
       width: screenWidth * 0.85,
       child: Column(
@@ -68,7 +70,10 @@ class DailyDrawer extends StatelessWidget {
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 1;
+                    Modular.to.navigate('/health');
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.calendar_month),
@@ -77,17 +82,23 @@ class DailyDrawer extends StatelessWidget {
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 2;
+                    Modular.to.navigate('/emotions/history');
+                  },
                 ),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.emoji_events_outlined),
-                  title: DailyText.text("Conquistas").body.large.bold,
+                  leading: const Icon(Icons.note_outlined),
+                  title: DailyText.text("Anotações").body.large.bold,
                   trailing: const Icon(
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 0;
+                    Modular.to.navigate('/annotations');
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.watch_outlined),
@@ -96,7 +107,10 @@ class DailyDrawer extends StatelessWidget {
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 0;
+                    Modular.to.navigate('/reminders');
+                  },
                 ),
                 const Divider(),
                 ListTile(
@@ -106,7 +120,10 @@ class DailyDrawer extends StatelessWidget {
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 0;
+                    Modular.to.navigate('/articles');
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.accessibility_new_sharp),
@@ -115,22 +132,16 @@ class DailyDrawer extends StatelessWidget {
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 2;
+                    Modular.to.navigate('/meditation');
+                  },
                 ),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.credit_card_outlined),
-                  title: DailyText.text("Métodos de Pagamento").body.large.bold,
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 18,
-                  ),
-                  onTap: () {},
-                ),
-                ListTile(
                   leading: const Icon(Icons.settings_outlined),
                   title: DailyText.text("Preferências").body.large.bold,
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),

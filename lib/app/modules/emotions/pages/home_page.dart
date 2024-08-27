@@ -5,10 +5,6 @@ import 'package:daily/app/modules/emotions/components/daily_emotion_selector.dar
 import 'package:daily/app/modules/emotions/components/home_page_articles.dart';
 import 'package:daily/app/modules/emotions/components/home_page_plans.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../core/domain/account.dart';
-import '../../../core/domain/providers/account_provider.dart';
 
 class HomePage extends StatefulWidget {
   static String ROUTE_NAME = '/';

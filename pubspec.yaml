@@ -52,6 +52,9 @@ flutter:
     - assets/article_illustration.png
     - assets/article_illustration2.png
     - assets/article_illustration3.png
+    - assets/article_illustration4.png
+    - assets/article_illustration5.png
+    - assets/article_illustration6.png
     - assets/may.png
     - assets/emoji_not_found.png
   fonts:

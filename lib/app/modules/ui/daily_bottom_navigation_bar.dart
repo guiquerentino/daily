@@ -6,7 +6,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-// Declare a GlobalKey for the BottomNavigationBar
 final GlobalKey<_DailyBottomNavigationBarState> bottomNavigationBarKey = GlobalKey<_DailyBottomNavigationBarState>();
 
 class DailyBottomNavigationBar extends StatefulWidget {
@@ -36,24 +35,20 @@ class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed, // Fixa o tipo
+          type: BottomNavigationBarType.fixed,
           elevation: 0,
-          backgroundColor: Colors.transparent, // Define o fundo como transparente para usar o container
+          backgroundColor: Colors.transparent,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Iconsax.home, size: 30),
               label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Iconsax.map, size: 30),
-              label: 'Explorar',
             ),
             BottomNavigationBarItem(
               icon: Icon(Iconsax.health, size: 30),
@@ -77,7 +72,9 @@ class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
               case 0:
                 Modular.to.navigate('/emotions${HomePage.ROUTE_NAME}');
                 break;
-              case 3:
+              case 1:
+                Modular.to.navigate('/health');
+              case 2:
                 Modular.to.navigate('/emotions${EmotionsHistoryPage.ROUTE_NAME}');
                 break;
               default:

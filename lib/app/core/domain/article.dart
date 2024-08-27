@@ -2,12 +2,14 @@ class Article {
   String title;
   String text;
   String autor;
-  String creationDate;
+  String bannerURL;
+  DateTime creationDate;
 
   Article({
     required this.title,
     required this.text,
     required this.autor,
+    required this.bannerURL,
     required this.creationDate,
   });
 
@@ -16,7 +18,8 @@ class Article {
         title: json['title'],
         text: json['text'],
         autor: json['autor'],
-        creationDate: json['creationDate']);
+        bannerURL: json['bannerURL'],
+        creationDate: DateTime.parse(json['creationDate']));
   }
 
   Map<String, dynamic> toJson() {
@@ -24,6 +27,7 @@ class Article {
       'title': title,
       'text': text,
       'autor': autor,
+      'bannerURL': bannerURL,
       'creationDate': creationDate
     };
   }

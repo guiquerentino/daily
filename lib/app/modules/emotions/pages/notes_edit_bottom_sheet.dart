@@ -119,7 +119,7 @@ class _NotesEditBottomSheetState extends State<NotesEditBottomSheet> {
                           children: [
                             TextFormField(
                               controller: _notaController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius:
@@ -128,7 +128,7 @@ class _NotesEditBottomSheetState extends State<NotesEditBottomSheet> {
                                 hintStyle: TextStyle(fontFamily: 'Pangram'),
                                 filled: true,
                                 fillColor: Colors.white,
-                                counterText: "",  // Remove default counter
+                                counterText: "",
                               ),
                               maxLength: _maxChars,
                               maxLines: null,
