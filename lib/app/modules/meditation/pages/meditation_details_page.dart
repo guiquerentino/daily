@@ -73,7 +73,6 @@ class _MeditationDetailsPageState extends State<MeditationDetailsPage> {
                     style: const TextStyle(fontFamily: 'Pangram'),
                   ),
                   const Gap(10),
-                  // Remova o botão "Iniciar" daqui
                 ],
               ),
             ),

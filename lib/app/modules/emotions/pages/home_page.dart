@@ -5,6 +5,7 @@ import 'package:daily/app/modules/emotions/components/daily_emotion_selector.dar
 import 'package:daily/app/modules/emotions/components/home_page_articles.dart';
 import 'package:daily/app/modules/emotions/components/home_page_plans.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
   static String ROUTE_NAME = '/';
@@ -36,28 +37,33 @@ class _HomePageState extends State<HomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 170,
-                      height: 65,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset("assets/may.png"),
-                            const Text(
-                              "Conversar com\na May",
-                              style: TextStyle(
-                                  fontFamily: 'Pangram',
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                    GestureDetector(
+                      onTap: () {
+                        Modular.to.navigate('/may');
+                      },
+                      child: Container(
+                        width: 170,
+                        height: 65,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset("assets/may.png"),
+                              const Text(
+                                "Conversar com\na May",
+                                style: TextStyle(
+                                    fontFamily: 'Pangram',
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

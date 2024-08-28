@@ -28,38 +28,54 @@ class DailyDrawer extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                SizedBox(
-                  height: 90,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          width: 50,
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(158, 181, 103, 1),
-                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                GestureDetector(
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 3;
+                    Modular.to.navigate('/profile');
+                  },
+                  child: SizedBox(
+                    height: 90,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: account?.profilePhoto == null
+                                  ? const Color.fromRGBO(158, 181, 103, 1)
+                                  : Colors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            child: account?.profilePhoto != null
+                                ? Image.memory(account!.profilePhoto!)
+                                : const Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.white,
+                                size: 40,
+                              ),
+                            ),
                           ),
-                        ),
-                        const Gap(15),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                              Text(account != null ? account.fullName! : 'Usuário',
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.start),
-                            Text(account != null ? account.email : 'email@email.com',
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w200)),
-                          ],
-                        ),
-                      ],
+                          const Gap(15),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                                Text(account != null ? account.fullName! : 'Usuário',
+                                  style: const TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.start),
+                              Text(account != null ? account.email : 'email@email.com',
+                                  style: const TextStyle(
+                                      fontSize: 16, fontWeight: FontWeight.w200)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -146,7 +162,9 @@ class DailyDrawer extends StatelessWidget {
                     Icons.arrow_forward_ios,
                     size: 18,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Modular.to.navigate('/profile/settings');
+                  },
                 ),
               ],
             ),

@@ -65,7 +65,7 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                             ],
                           ),
                         ),
-                        backgroundColor: Color.fromRGBO(238, 238, 238, 1),
+                        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
                         footer: new Text(

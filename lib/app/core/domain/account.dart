@@ -1,10 +1,13 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 class Account {
   int? id;
   int accountType;
   String email;
   String? password;
   String? fullName;
-  List<int>? profilePhoto;
+  Uint8List? profilePhoto;
   int? gender;
   int? age;
   List<int>? targets;
@@ -40,7 +43,7 @@ class Account {
           .toList(),
       fullName: json['fullName'],
       profilePhoto: json['profilePhoto'] != null
-          ? List<int>.from(json['profilePhoto'])
+          ? base64Decode(json['profilePhoto'])
           : null,
       gender: _getGenderFromString(json['gender']),
       age: json['age'],

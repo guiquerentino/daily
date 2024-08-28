@@ -77,6 +77,8 @@ class _DailyBottomNavigationBarState extends State<DailyBottomNavigationBar> {
               case 2:
                 Modular.to.navigate('/emotions${EmotionsHistoryPage.ROUTE_NAME}');
                 break;
+              case 3:
+                Modular.to.navigate('/profile');
               default:
                 break;
             }

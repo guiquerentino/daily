@@ -29,6 +29,8 @@ dependencies:
   syncfusion_flutter_gauges: 24.2.5
   flutter_bloc: ^8.1.6
   numberpicker: ^2.1.2
+  image_picker: ^1.0.8
+  flutter_gemini: ^2.0.5
 
 dev_dependencies:
   flutter_test:

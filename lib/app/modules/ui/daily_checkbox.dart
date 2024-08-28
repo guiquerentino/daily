@@ -24,7 +24,7 @@ class _DailyCheckboxState extends State<DailyCheckbox> {
         checkColor: Colors.white,
         activeColor: Colors.black,
         value: widget.value,
-        onChanged: widget.onClicked, // Passando a função diretamente
+        onChanged: widget.onClicked,
       ),
     );
   }

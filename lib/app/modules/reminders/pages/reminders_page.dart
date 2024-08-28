@@ -150,7 +150,7 @@ class _RemindersPageState extends State<RemindersPage> {
   Future<void> _showDeleteConfirmationDialog(ReminderRequest reminder) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // Usuário deve tocar em um dos botões
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Atenção'),
