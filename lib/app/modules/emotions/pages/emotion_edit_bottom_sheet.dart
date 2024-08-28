@@ -81,7 +81,7 @@ class _EmotionEditBottomSheetState extends State<EmotionEditBottomSheet> {
                             GestureDetector(
                               onTap: () {
                                 widget.emotion.emotionType = EMOTION_TYPE.BRAVO;
-                                widget.pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+                                widget.pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
                               },
                               child: Column(
                                 children: [
@@ -93,7 +93,7 @@ class _EmotionEditBottomSheetState extends State<EmotionEditBottomSheet> {
                             GestureDetector(
                               onTap: () {
                                 widget.emotion.emotionType = EMOTION_TYPE.TRISTE;
-                                widget.pageController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+                                widget.pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
                               },
                               child: Column(
                                 children: [

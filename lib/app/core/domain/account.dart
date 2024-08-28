@@ -8,6 +8,7 @@ class Account {
   int? gender;
   int? age;
   List<int>? targets;
+  List<String>? completedGoals;
   bool? hasOnboarding;
   int? meditationExperience;
   String? codeToConnect;
@@ -21,6 +22,7 @@ class Account {
     this.profilePhoto,
     this.gender,
     this.age,
+    this.completedGoals,
     this.targets,
     this.hasOnboarding,
     this.meditationExperience,
@@ -33,11 +35,18 @@ class Account {
       accountType: _getAccountTypeFromString(json['accountType']),
       email: json['email'],
       password: json['password'],
+      completedGoals: (json['completedGoals'] as List<dynamic>?)
+          ?.map((item) => item as String)
+          .toList(),
       fullName: json['fullName'],
-      profilePhoto: json['profilePhoto'] != null ? List<int>.from(json['profilePhoto']) : null,
+      profilePhoto: json['profilePhoto'] != null
+          ? List<int>.from(json['profilePhoto'])
+          : null,
       gender: _getGenderFromString(json['gender']),
       age: json['age'],
-      targets: json['targets'] != null ? List<int>.from(json['targets']) : null,
+      targets: json['targets'] != null
+          ? List<int>.from(json['targets'])
+          : null,
       hasOnboarding: json['hasOnboarding'],
       meditationExperience: _getMeditationExperienceFromString(json['meditationExperience']),
       codeToConnect: json['codeToConnect'],
@@ -51,10 +60,11 @@ class Account {
       'email': email,
       'password': password,
       'fullName': fullName,
+      'completedGoals': completedGoals,
       'profilePhoto': profilePhoto,
       'gender': gender.toString().split('.').last,
       'age': age,
-      'targets': targets?.map((e) => e.toString().split('.').last).toList(), // Modificado para List<int>?
+      'targets': targets?.map((e) => e.toString().split('.').last).toList(),
       'hasOnboarding': hasOnboarding,
       'meditationExperience': meditationExperience.toString().split('.').last,
       'codeToConnect': codeToConnect,

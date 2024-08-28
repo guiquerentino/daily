@@ -15,4 +15,5 @@ class AccountProvider with ChangeNotifier {
     _account = null;
     notifyListeners();
   }
+
 }

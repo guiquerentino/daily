@@ -2,6 +2,7 @@ import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,7 +65,7 @@ class DailyDrawer extends StatelessWidget {
                 ),
                 const Divider(),
                 ListTile(
-                  leading: const Icon(Icons.psychology_alt_outlined),
+                  leading: const Icon(Iconsax.health),
                   title: DailyText.text("Espaço Saúde").body.large.bold,
                   trailing: const Icon(
                     Icons.arrow_forward_ios,

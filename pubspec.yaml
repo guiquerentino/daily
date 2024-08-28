@@ -18,6 +18,7 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_staggered_animations: ^1.1.1
   font_awesome_flutter: ^10.7.0
+  audioplayers: ^5.1.0
   iconsax: ^0.0.8
   flutter_modular: ^6.3.3
   provider: ^6.1.2
@@ -41,6 +42,15 @@ flutter:
     - assets/sucess.svg
     - assets/raccon_logo.png
     - assets/raccoon.svg
+    - assets/atencaoplena.mp3
+    - assets/vipassana.mp3
+    - assets/respiracaoserena.mp3
+    - assets/mentetranquila.mp3
+    - assets/pazinterior.mp3
+    - assets/profunda.mp3
+    - assets/progressivo.mp3
+    - assets/compaixao.mp3
+    - assets/stress.mp3
     - assets/emoji_felicidade.png
     - assets/emoji_tristeza.png
     - assets/meta_concluida.png
@@ -55,6 +65,16 @@ flutter:
     - assets/article_illustration4.png
     - assets/article_illustration5.png
     - assets/article_illustration6.png
+    - assets/m1.png
+    - assets/m2.png
+    - assets/m3.png
+    - assets/m4.png
+    - assets/m5.png
+    - assets/m6.png
+    - assets/m7.png
+    - assets/m8.png
+    - assets/m9.png
+    - assets/m10.png
     - assets/may.png
     - assets/emoji_not_found.png
   fonts:
@@ -71,3 +91,5 @@ flutter:
         - asset: assets/fonts/Pangram-Bold.otf
           style: normal
   uses-material-design: true
+assets/m1:
+  png:
