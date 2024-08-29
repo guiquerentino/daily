@@ -6,7 +6,7 @@ class Emotion {
   int? id;
   int? ownerId;
   String? text;
-  List<Comment>? comments;
+  String? comment;
   EMOTION_TYPE? emotionType;
   DateTime? creationDate;
   List<Tags>? tags;
@@ -18,7 +18,7 @@ class Emotion {
     this.emotionType,
     this.creationDate,
     this.tags,
-    this.comments,
+    this.comment,
   });
 
   factory Emotion.fromJson(Map<String, dynamic> json) {
@@ -26,9 +26,7 @@ class Emotion {
       id: json['id'],
       ownerId: json['ownerId'],
       text: json['text'],
-      comments: (json['comments'] as List<dynamic>?)
-          ?.map((e) => Comment.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      comment: json['comment'],
       emotionType: json['emotionType'] != null
           ? EMOTION_TYPE.values.firstWhere(
             (e) => e.toString() == 'EMOTION_TYPE.${json['emotionType']}',
@@ -49,7 +47,7 @@ class Emotion {
       'id': id,
       'ownerId': ownerId,
       'text': text,
-      'comments': comments?.map((e) => e.toJson()).toList(),
+      'comment': comment,
       'emotionType': emotionType?.toString().split('.').last,
       'creationDate': creationDate?.toIso8601String(),
       'tags': tags?.map((e) => e.toJson()).toList(),
@@ -65,40 +63,6 @@ class Emotion {
 
   static List<Emotion> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => Emotion.fromJson(json as Map<String, dynamic>)).toList();
-  }
-}
-
-class Comment {
-  int? id;
-  int? registerId;
-  String? text;
-  DateTime? dataHoraCriacao;
-
-  Comment({
-    this.id,
-    this.registerId,
-    this.text,
-    this.dataHoraCriacao,
-  });
-
-  factory Comment.fromJson(Map<String, dynamic> json) {
-    return Comment(
-      id: json['id'],
-      registerId: json['registerId'],
-      text: json['text'],
-      dataHoraCriacao: json['dataHoraCriacao'] != null
-          ? DateTime.parse(json['dataHoraCriacao'])
-          : null,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'registerId': registerId,
-      'text': text,
-      'dataHoraCriacao': dataHoraCriacao?.toIso8601String(),
-    };
   }
 }
 

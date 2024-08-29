@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import '../../../core/domain/account.dart';
 import '../../../core/domain/emotion.dart';
 import '../../../core/domain/providers/account_provider.dart';
-import '../pages/emotion_edit_bottom_sheet.dart';
 
 class DailyEmotionRegisters extends StatefulWidget {
   const DailyEmotionRegisters({super.key});

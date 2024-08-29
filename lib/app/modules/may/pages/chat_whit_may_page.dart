@@ -47,12 +47,18 @@ class _ChatWithMayPageState extends State<ChatWithMayPage> {
         _textMessages.add(text);
         _scrollToBottom();
 
+        final loadingMessage = _buildLoadingBubble();
+        _messages.add(loadingMessage);
+        _scrollToBottom();
+
         final gemini = Gemini.instance;
 
-        String geminiConfig = 'Você é uma inteligência artificial chamada May (em hipotese alguma você deve falar que seu nome não é May), e esta em um app chamado Daily, o app é focado na saúde mental, o usuário consegue adicionar registros de suas emoções (bravo,feliz,muito feliz,triste etc) e colocar motivos (faculdade,finanças,conjuge etc), além disso ele consegue fazer meditação, anotações, adicionar lembretes e falar com seu psicólogo. Você deve responder as perguntas deles focada na área da Saúde Mental, caso a pergunta saia muito do contexto de saúde mental, você não deve responder. Tente recomendar a utilização de serviços do Aplicativo. As mensagens ja enviadas foram essas (a primeira mensagem foi enviada por você automaticamente):' + _textMessages.toString() + "A mensagem enviada pelo usuário é a seguinte, responda ela: " + text;
+        String geminiConfig = 'Você é uma inteligência artificial chamada May (em hipotese alguma você deve falar que seu nome não é May), e esta em um app chamado Daily, o app é focado na saúde mental, o usuário consegue adicionar registros de suas emoções (bravo,feliz,muito feliz,triste etc) e colocar motivos (faculdade,finanças,conjuge etc), além disso ele consegue fazer meditação, anotações, adicionar lembretes e falar com seu psicólogo. Você deve responder as perguntas deles focada na área da Saúde Mental, caso a pergunta saia muito do contexto de saúde mental, você não deve responder. Tente recomendar a utilização de serviços do Aplicativo. Um ponto importante é que o usuário que você está falando Mora no Brasil. As mensagens ja enviadas foram essas (a primeira mensagem foi enviada por você automaticamente):' + _textMessages.toString() + "A mensagem enviada pelo usuário é a seguinte, responda ela: " + text;
 
         gemini.text(geminiConfig).then((value) {
           setState(() {
+            _messages.remove(loadingMessage);
+
             _messages.add(_buildMessageBubble(value!.output!.replaceAll('*', ''), true));
             _textMessages.add(value!.output!.replaceAll('*', ''));
             _scrollToBottom();
@@ -73,6 +79,29 @@ class _ChatWithMayPageState extends State<ChatWithMayPage> {
       );
     });
   }
+
+  Widget _buildLoadingBubble() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        width: 300,
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Animação dos três pontinhos
+            LoadingDots(),
+          ],
+        ),
+      ),
+    );
+  }
+
 
   void _clearMessages() {
     setState(() {
@@ -154,7 +183,7 @@ class _ChatWithMayPageState extends State<ChatWithMayPage> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width * .77,
-                  height: 50,
+                  height: 70,
                   child: TextFormField(
                     controller: _textController,
                     decoration: const InputDecoration(
@@ -166,9 +195,12 @@ class _ChatWithMayPageState extends State<ChatWithMayPage> {
                       ),
                       fillColor: Color.fromRGBO(196, 196, 196, 0.20),
                     ),
+                    maxLines: null,
+                    expands: true,
                     onFieldSubmitted: (value) => _sendMessage(),
                   ),
                 ),
+
                 GestureDetector(
                   onTap: _sendMessage,
                   child: Container(
@@ -187,6 +219,50 @@ class _ChatWithMayPageState extends State<ChatWithMayPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class LoadingDots extends StatefulWidget {
+  @override
+  _LoadingDotsState createState() => _LoadingDotsState();
+}
+
+class _LoadingDotsState extends State<LoadingDots> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<int> _dotAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    )..repeat();
+    _dotAnimation = StepTween(begin: 1, end: 3).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _dotAnimation,
+      builder: (context, child) {
+        String dots = '.' * _dotAnimation.value;
+        return Text(
+          'May está digitando$dots',
+          style: const TextStyle(
+            color: Colors.black,
+            fontFamily: 'Pangram',
+            fontSize: 16,
+          ),
+        );
+      },
     );
   }
 }

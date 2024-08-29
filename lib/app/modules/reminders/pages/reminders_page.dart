@@ -5,8 +5,11 @@ import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../../../core/domain/account.dart';
 import '../../../core/domain/external/reminder_request.dart';
+import '../../../core/domain/providers/account_provider.dart';
 import '../../emotions/components/daily_drawer.dart';
 import '../../ui/daily_bottom_navigation_bar.dart';
 import '../../ui/daily_text.dart';
@@ -29,9 +32,11 @@ class _RemindersPageState extends State<RemindersPage> {
   }
 
   Future<void> fetchReminders() async {
+    Account? account =
+        Provider.of<AccountProvider>(context, listen: false).account;
     try {
-      final response =
-          await http.get(Uri.parse('http://10.0.2.2:8080/api/v1/reminder'));
+      final response = await http.get(Uri.parse(
+          'http://10.0.2.2:8080/api/v1/reminder?userId=${account!.id}'));
       if (response.statusCode == 200) {
         print(response.body);
         final List<dynamic> reminderJson = json.decode(response.body);
@@ -47,8 +52,6 @@ class _RemindersPageState extends State<RemindersPage> {
       print(e.toString());
     }
   }
-
-  Future<void> saveReminder(ReminderRequest request) async {}
 
   Future<void> _showAddReminderDialog() async {
     String? reminderText;
@@ -130,7 +133,13 @@ class _RemindersPageState extends State<RemindersPage> {
                     reminders.add(newReminder);
                   });
 
-                  http.post(Uri.parse('http://10.0.2.2:8080/api/v1/reminder'),
+                  Account? account =
+                      Provider.of<AccountProvider>(context, listen: false)
+                          .account;
+
+                  http.post(
+                      Uri.parse(
+                          'http://10.0.2.2:8080/api/v1/reminder?userId=${account!.id}'),
                       headers: <String, String>{
                         'Content-Type': 'application/json; charset=UTF-8',
                       },
