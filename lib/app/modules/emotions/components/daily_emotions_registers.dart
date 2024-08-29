@@ -300,6 +300,30 @@ class _DailyEmotionRegistersState extends State<DailyEmotionRegisters> {
                                               ),
                                             ),
                                           ],
+                                          if (emotion.comment != null && emotion.comment!.isNotEmpty) ...[
+                                            const Divider(),
+                                            RichText(
+                                              textAlign: TextAlign.left,
+                                              text: TextSpan(
+                                                style: const TextStyle(
+                                                  fontFamily: 'Pangram',
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                ),
+                                                children: <TextSpan>[
+                                                  const TextSpan(
+                                                    text: 'Comentário do Psicólogo: ',
+                                                    style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text: emotion.comment!,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ],
                                       ),
                                     ),

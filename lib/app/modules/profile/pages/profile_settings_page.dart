@@ -65,6 +65,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                               fontSize: 20,
                             )),
                         Switch(
+                          activeColor: const Color.fromRGBO(158, 181, 103, 1),
                             value: faceID,
                             onChanged: (value) {
                               setState(() {
@@ -86,6 +87,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                               fontSize: 20,
                             )),
                         Switch(
+                            activeColor: const Color.fromRGBO(158, 181, 103, 1),
                             value: notifications,
                             onChanged: (value) {
                               setState(() {
@@ -107,6 +109,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                               fontSize: 20,
                             )),
                         Switch(
+                            activeColor: const Color.fromRGBO(158, 181, 103, 1),
                             value: darkMode,
                             onChanged: (value) {
                               setState(() {
