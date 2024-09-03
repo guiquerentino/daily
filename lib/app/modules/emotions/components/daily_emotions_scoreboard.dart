@@ -39,17 +39,17 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                 runSpacing: 0,
                 children: [
                   Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: CircularPercentIndicator(
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 74 / 100,
+                        percent: 50 / 100,
                         center: RichText(
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '74\n',
+                                text: '50\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -68,24 +68,24 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                         backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
-                        footer: new Text(
+                        footer:  const Text(
                           "Mental",
                           style:
-                          new TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
+                           TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
                         ),
                       )),
                   Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: CircularPercentIndicator(
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 62 / 100,
+                        percent: 50 / 100,
                         center: RichText(
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '62\n',
+                                text: '50\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -101,27 +101,27 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                             ],
                           ),
                         ),
-                        backgroundColor: Color.fromRGBO(238, 238, 238, 1),
+                        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
-                        footer: new Text(
+                        footer:  const Text(
                           "Foco",
                           style:
-                          new TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
+                           TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
                         ),
                       )),
                   Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: CircularPercentIndicator(
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 85 / 100,
+                        percent: 50 / 100,
                         center: RichText(
                           text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '85\n',
+                                text: '50\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -137,27 +137,27 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                             ],
                           ),
                         ),
-                        backgroundColor: Color.fromRGBO(238, 238, 238, 1),
+                        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
-                        footer: new Text(
+                        footer:  const Text(
                           "Relações",
                           style:
-                          new TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
+                           TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
                         ),
                       )),
                   Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: CircularPercentIndicator(
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 42 / 100,
+                        percent: 50 / 100,
                         center: RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '42\n',
+                                text: '50\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -173,27 +173,27 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                             ],
                           ),
                         ),
-                        backgroundColor: Color.fromRGBO(238, 238, 238, 1),
+                        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
-                        footer: new Text(
+                        footer: const Text(
                           "Finanças",
                           style:
-                          new TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
+                           TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
                         ),
                       )),
                   Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: CircularPercentIndicator(
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 61 / 100,
+                        percent: 50 / 100,
                         center: RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '61\n',
+                                text: '50\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -209,27 +209,27 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                             ],
                           ),
                         ),
-                        backgroundColor: Color.fromRGBO(238, 238, 238, 1),
+                        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
-                        footer: new Text(
+                        footer:  const Text(
                           "Auto-estima",
                           style:
-                          new TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
+                           TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
                         ),
                       )),
                   Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: CircularPercentIndicator(
                         radius: 45.0,
                         lineWidth: 6.0,
                         animation: true,
-                        percent: 55 / 100,
+                        percent: 50 / 100,
                         center: RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             children: [
                               TextSpan(
-                                text: '55\n',
+                                text: '50\n',
                                 style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
@@ -245,13 +245,13 @@ class _DailyEmotionsScoreboardState extends State<DailyEmotionsScoreboard> {
                             ],
                           ),
                         ),
-                        backgroundColor: Color.fromRGBO(238, 238, 238, 1),
+                        backgroundColor: const Color.fromRGBO(238, 238, 238, 1),
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: const Color.fromRGBO(158, 181, 103, 1),
-                        footer: new Text(
+                        footer: const Text(
                           "Stress",
                           style:
-                          new TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
+                          TextStyle(fontFamily: 'Pangram',fontWeight: FontWeight.w300, fontSize: 15.0),
                         ),
                       )),
                 ],

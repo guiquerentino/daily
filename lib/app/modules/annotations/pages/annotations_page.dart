@@ -147,6 +147,7 @@ class _AnnotationsPageState extends State<AnnotationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       drawer: const DailyDrawer(),
       bottomNavigationBar: const DailyBottomNavigationBar(),
       body: Column(
@@ -197,21 +198,35 @@ class _AnnotationsPageState extends State<AnnotationsPage> {
                   children: [
                     Container(
                       width: double.maxFinite,
-                      height: 70,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8)
+                      ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(annotation.text,
-                                style: const TextStyle(
-                                    color:
-                                    Color.fromRGBO(158, 181, 103, 1),
-                                    fontSize: 18,
-                                    overflow: TextOverflow.ellipsis,
-                                    fontFamily: 'Pangram')),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 335,
+                                  child: Text(annotation.text,
+                                      style: const TextStyle(
+                                          color:
+                                          Colors.black,
+                                          fontSize: 18,
+                                          fontFamily: 'Pangram')),
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      _showDeleteConfirmationDialog(annotation);
+                                    },
+                                    child: const Icon(Icons.delete))
+                              ],
+                            ),
+                            const Gap(5),
                             Row(
                               mainAxisAlignment:
                               MainAxisAlignment.spaceBetween,
@@ -219,14 +234,10 @@ class _AnnotationsPageState extends State<AnnotationsPage> {
                                 Text(
                                     DateFormat('dd/MM/yy HH:mm')
                                         .format(annotation.creationDate),
-                                    style: TextStyle(
+                                    style: const TextStyle(
+                                      color: Color.fromRGBO(97, 97, 97, 1),
                                         fontFamily: 'Pangram',
                                         fontWeight: FontWeight.w400)),
-                                GestureDetector(
-                                    onTap: () {
-                                      _showDeleteConfirmationDialog(annotation);
-                                    },
-                                    child: Icon(Icons.delete))
                               ],
                             )
                           ],

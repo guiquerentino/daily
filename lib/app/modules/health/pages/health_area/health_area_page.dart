@@ -85,18 +85,24 @@ class _HealthAreaPageState extends State<HealthAreaPage> {
                   ),
                 ),
               ),
-              Container(
-                height: 100,
-                width: 110,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
-                ),
-                child: Column(
-                  children: [
-                    Image.asset('assets/article_illustration2.png', height: 70, width: 70),
-                    const Text("Respiração")
-                  ],
+              GestureDetector(
+                onTap: () {
+                  Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 1;
+                  Modular.to.navigate('/goals');
+                },
+                child: Container(
+                  height: 100,
+                  width: 110,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      Image.asset('assets/article_illustration2.png', height: 70, width: 70),
+                      const Text("Metas")
+                    ],
+                  ),
                 ),
               ),
               GestureDetector(

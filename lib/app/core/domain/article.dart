@@ -4,6 +4,8 @@ class Article {
   String autor;
   String bannerURL;
   DateTime creationDate;
+  String minutesToRead;
+  String category;
 
   Article({
     required this.title,
@@ -11,6 +13,8 @@ class Article {
     required this.autor,
     required this.bannerURL,
     required this.creationDate,
+    required this.minutesToRead,
+    required this.category
   });
 
   factory Article.fromJson(Map<String, dynamic> json) {
@@ -18,6 +22,8 @@ class Article {
         title: json['title'],
         text: json['text'],
         autor: json['autor'],
+        category: json['category'],
+        minutesToRead: json['minutesToRead'],
         bannerURL: json['bannerURL'],
         creationDate: DateTime.parse(json['creationDate']));
   }
@@ -27,6 +33,8 @@ class Article {
       'title': title,
       'text': text,
       'autor': autor,
+      'category':category,
+      'minutesToRead': minutesToRead,
       'bannerURL': bannerURL,
       'creationDate': creationDate
     };

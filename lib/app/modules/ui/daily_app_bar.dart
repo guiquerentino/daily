@@ -29,12 +29,8 @@ class _DailyHomeAppBarState extends State<DailyAppBar> {
                   size: 30,
                 )),
             DailyText.text(widget.title).header.medium.bold,
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
-                  size: 30,
-                )),
+            Container(),
+            Container(),
           ],
         ),
       ],

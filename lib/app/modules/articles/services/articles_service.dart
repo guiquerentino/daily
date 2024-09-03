@@ -18,5 +18,18 @@ class ArticlesService {
     return Article.fromJsonList(decodedJson);
   }
 
+  Future<List<Article>> fetchAllArticles() async {
+    http.Response response = await http.get(
+      Uri.parse('http://10.0.2.2:8080/api/v1/article/all'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    final List<dynamic> decodedJson = jsonDecode(response.body);
+
+    return Article.fromJsonList(decodedJson);
+  }
+
 }
 

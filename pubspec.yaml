@@ -31,6 +31,8 @@ dependencies:
   numberpicker: ^2.1.2
   image_picker: ^1.0.8
   flutter_gemini: ^2.0.5
+  flutter_local_notifications: ^17.2.2
+  timezone: ^0.9.4
 
 dev_dependencies:
   flutter_test:

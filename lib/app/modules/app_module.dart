@@ -3,6 +3,7 @@ import 'package:daily/app/modules/articles/articles_modules.dart';
 import 'package:daily/app/modules/auth/auth_module.dart';
 import 'package:daily/app/modules/emotions/emotions_module.dart';
 import 'package:daily/app/core/pages/splash_page.dart';
+import 'package:daily/app/modules/goals/goals_module.dart';
 import 'package:daily/app/modules/health/health_module.dart';
 import 'package:daily/app/modules/may/may_module.dart';
 import 'package:daily/app/modules/meditation/meditation_module.dart';
@@ -28,5 +29,6 @@ class AppModule extends Module {
     r.module('/meditation', module: MeditationModule());
     r.module('/profile', module: ProfileModule());
     r.module('/may', module: MayModule());
+    r.module('/goals', module: GoalsModule());
     }
 }

@@ -17,7 +17,7 @@ class ReminderRequest{
       id: json['id'],
       text: json['text'],
       scheduledTime: DateTime.parse(json['scheduledTime']),
-      isActivated: json['isActivated']
+      isActivated: json['activated']
     );
   }
 

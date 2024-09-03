@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import '../../../core/domain/account.dart';
 import '../../../core/domain/external/reminder_request.dart';
 import '../../../core/domain/providers/account_provider.dart';
@@ -23,12 +25,54 @@ class RemindersPage extends StatefulWidget {
 
 class _RemindersPageState extends State<RemindersPage> {
   List<ReminderRequest> reminders = [];
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
     fetchReminders();
+    tz.initializeTimeZones();
+    initializeNotifications();
     initializeDateFormatting('pt_BR', null);
+  }
+
+  void initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    const InitializationSettings initializationSettings =
+    InitializationSettings(android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  Future<void> scheduleNotification(ReminderRequest reminder) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'reminder_notification',
+      'reminder_name',
+      importance: Importance.max,
+      priority: Priority.high,
+      enableVibration: true,
+      showWhen: false,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+    NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    final tz.TZDateTime tzScheduledTime = tz.TZDateTime.from(reminder.scheduledTime, tz.local);
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      reminder.id!,
+      'Lembrete acionado',
+      '${reminder.text}',
+      tzScheduledTime,
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
   }
 
   Future<void> fetchReminders() async {
@@ -122,28 +166,35 @@ class _RemindersPageState extends State<RemindersPage> {
               child: const Text('Cancelar'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 if (reminderText != null && reminderDateTime != null) {
                   final newReminder = ReminderRequest(
                     text: reminderText!,
                     scheduledTime: reminderDateTime!,
                     isActivated: true,
                   );
-                  setState(() {
-                    reminders.add(newReminder);
-                  });
 
                   Account? account =
                       Provider.of<AccountProvider>(context, listen: false)
                           .account;
 
-                  http.post(
+                 final response = await http.post(
                       Uri.parse(
                           'http://10.0.2.2:8080/api/v1/reminder?userId=${account!.id}'),
                       headers: <String, String>{
                         'Content-Type': 'application/json; charset=UTF-8',
                       },
                       body: jsonEncode(newReminder.toJson()));
+
+                 if(response.statusCode == 201 || response.statusCode == 200){
+                   final newReminder = ReminderRequest.fromJson(jsonDecode(response.body));
+
+                   setState(() {
+                     reminders.add(newReminder);
+                   });
+
+                   scheduleNotification(newReminder);
+                 }
 
                   Navigator.of(context).pop();
                 }

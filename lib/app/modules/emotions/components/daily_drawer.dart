@@ -129,6 +129,18 @@ class DailyDrawer extends StatelessWidget {
                     Modular.to.navigate('/reminders');
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.equalizer),
+                  title: DailyText.text("Metas").body.large.bold,
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                  ),
+                  onTap: () {
+                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 0;
+                    Modular.to.navigate('/goals');
+                  },
+                ),
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.newspaper_outlined),
