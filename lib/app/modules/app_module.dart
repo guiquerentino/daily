@@ -10,6 +10,7 @@ import 'package:daily/app/modules/meditation/meditation_module.dart';
 import 'package:daily/app/modules/onboarding/onboarding_module.dart';
 import 'package:daily/app/modules/profile/profile_module.dart';
 import 'package:daily/app/modules/reminders/reminders_module.dart';
+import 'package:daily/app/modules/tests/tests_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AppModule extends Module {
@@ -30,5 +31,6 @@ class AppModule extends Module {
     r.module('/profile', module: ProfileModule());
     r.module('/may', module: MayModule());
     r.module('/goals', module: GoalsModule());
+    r.module('/tests', module: TestsModule());
     }
 }

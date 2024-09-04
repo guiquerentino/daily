@@ -64,7 +64,7 @@ class _RemindersPageState extends State<RemindersPage> {
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
       reminder.id!,
-      'Lembrete acionado',
+      'Lembrete',
       '${reminder.text}',
       tzScheduledTime,
       platformChannelSpecifics,
