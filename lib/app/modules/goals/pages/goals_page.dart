@@ -46,6 +46,30 @@ class _GoalsPageState extends State<GoalsPage> {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
+  Future<void> toggleGoalDoneStatus(int goalId) async {
+    try {
+      final response = await http.put(
+        Uri.parse('http://10.0.2.2:8080/api/v1/goals?goalId=$goalId'),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          fetchedGoals = fetchedGoals.map((goal) {
+            if (goal.id == goalId) {
+              return goal.copyWith(isDone: !goal.isDone);
+            }
+            return goal;
+          }).toList();
+        });
+      } else {
+        throw Exception('Falha ao atualizar o estado da meta');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+
   Future<void> scheduleNotification(Goal goal) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
      AndroidNotificationDetails(
@@ -131,198 +155,266 @@ class _GoalsPageState extends State<GoalsPage> {
   Future<void> _showAddReminderDialog() async {
     String? goalText;
     DateTime? goalDateTime;
+    bool isAllDay = false;
+    bool isAllDayButtonPressed = false;
 
     await showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Adicionar Meta'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Nome da Meta',
-                ),
-                onChanged: (value) {
-                  goalText = value;
-                },
-              ),
-              const SizedBox(height: 20),
-              Row(
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Adicionar Meta'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Data e Horário   '),
-                  const Spacer(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-
-                      if (pickedDate != null) {
-                        TimeOfDay? pickedTime = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-
-                        if (pickedTime != null) {
-                          setState(() {
-                            goalDateTime = DateTime(
-                              pickedDate.year,
-                              pickedDate.month,
-                              pickedDate.day,
-                              pickedTime.hour,
-                              pickedTime.minute,
-                            );
-                          });
-                        }
-                      }
+                  TextField(
+                    decoration: const InputDecoration(
+                      labelText: 'Nome da Meta',
+                    ),
+                    onChanged: (value) {
+                      goalText = value;
                     },
-                    child: Text(goalDateTime != null
-                        ? "${goalDateTime!.day}/${goalDateTime!.month}/${goalDateTime!.year} ${goalDateTime!.hour}:${goalDateTime!.minute}"
-                        : 'Defina uma data'),
+                  ),
+                  const SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: isAllDayButtonPressed
+                            ? null
+                            : () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+
+                          if (pickedDate != null) {
+                            TimeOfDay? pickedTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+
+                            if (pickedTime != null) {
+                              setState(() {
+                                goalDateTime = DateTime(
+                                  pickedDate.year,
+                                  pickedDate.month,
+                                  pickedDate.day,
+                                  pickedTime.hour,
+                                  pickedTime.minute,
+                                );
+                                isAllDay = false;
+                              });
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                        ),
+                        child: Text(
+                          goalDateTime != null
+                              ? "${goalDateTime!.day}/${goalDateTime!.month}/${goalDateTime!.year} ${goalDateTime!.hour}:${goalDateTime!.minute}"
+                              : 'Defina uma data',
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            isAllDayButtonPressed = !isAllDayButtonPressed;
+                            isAllDay = isAllDayButtonPressed;
+                            goalDateTime = null;
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: isAllDayButtonPressed
+                              ? const Color.fromRGBO(158, 181, 103, 1)
+                              : Colors.white,
+                        ),
+                        child: Text(
+                          'Todos os dias',
+                          style: TextStyle(
+                            color: isAllDayButtonPressed ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () async {
-                if (goalText != null && goalDateTime != null) {
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    if (goalText != null) {
+                      Account? account =
+                          Provider.of<AccountProvider>(context, listen: false)
+                              .account;
 
-                  Account? account =
-                      Provider.of<AccountProvider>(context, listen: false)
-                          .account;
+                      final goal = Goal(
+                        title: goalText!,
+                        isDone: false,
+                        createdBy: account!.fullName!,
+                        scheduledTime: isAllDay ? DateTime.now() : goalDateTime!,
+                        userId: account!.id!,
+                        isAllDay: isAllDay,
+                      );
 
-                  final goal = Goal(title: goalText!, createdBy: account!.fullName!, scheduledTime: goalDateTime!, userId: account!.id!);
+                      try {
+                        final response = await http.post(
+                          Uri.parse('http://10.0.2.2:8080/api/v1/goals'),
+                          headers: <String, String>{
+                            'Content-Type': 'application/json; charset=UTF-8',
+                          },
+                          body: jsonEncode(goal.toJson()),
+                        );
 
-                  try {
-                    final response = await http.post(
-                      Uri.parse('http://10.0.2.2:8080/api/v1/goals'),
-                      headers: <String, String>{
-                        'Content-Type': 'application/json; charset=UTF-8',
-                      },
-                      body: jsonEncode(goal.toJson()),
-                    );
+                        if (response.statusCode == 201) {
+                          final newGoal = Goal.fromJson(jsonDecode(response.body));
 
-                    if (response.statusCode == 201) {
-                      final newGoal = Goal.fromJson(jsonDecode(response.body));
+                          setState(() {
+                            fetchedGoals.add(newGoal);
+                          });
 
-                      setState(() {
-                        fetchedGoals.add(newGoal);
-                      });
+                          scheduleNotification(newGoal);
 
-                      scheduleNotification(newGoal);
-                    } else {
-                      throw Exception('Falha ao adicionar a meta');
+                          fetchAllGoals();
+                        } else {
+                          throw Exception('Falha ao adicionar a meta');
+                        }
+                      } catch (e) {
+                        print(e.toString());
+                      }
+
+                      Navigator.of(context).pop();
                     }
-                  } catch (e) {
-                    print(e.toString());
-                  }
-
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Adicionar'),
-            ),
-          ],
+                  },
+                  child: const Text('Adicionar'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
   }
 
+
+
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
-        drawer: const DailyDrawer(),
-        bottomNavigationBar: const DailyBottomNavigationBar(),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Builder(
-                        builder: (context) {
-                          return IconButton(
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
+      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
+      drawer: const DailyDrawer(),
+      bottomNavigationBar: const DailyBottomNavigationBar(),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Builder(
+                      builder: (context) {
+                        return IconButton(
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                          icon: const Icon(
+                            Icons.menu_outlined,
+                            size: 30,
+                          ),
+                        );
+                      },
+                    ),
+                    DailyText.text("Metas").header.medium.bold,
+                    IconButton(
+                      onPressed: () {
+                        _showAddReminderDialog();
+                      },
+                      icon: const Icon(
+                        Icons.add,
+                        size: 30,
+                      ),
+                    ),
+                  ],
+                ),
+                (fetchedGoals.isNotEmpty)
+                    ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    runSpacing: 12,
+                    children: fetchedGoals.map((goal) {
+                      bool expanded = isExpanded[goal.id] ?? false;
+
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isExpanded[goal.id!] = !expanded;
+                              });
                             },
-                            icon: const Icon(
-                              Icons.menu_outlined,
-                              size: 30,
-                            ),
-                          );
-                        },
-                      ),
-                      DailyText.text("Metas").header.medium.bold,
-                      IconButton(
-                        onPressed: () {
-                          _showAddReminderDialog();
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                  (fetchedGoals.isNotEmpty)
-                      ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Wrap(
-                      runSpacing: 12,
-                      children: fetchedGoals.map((goal) {
-                        bool expanded = isExpanded[goal.id] ?? false;
-          
-                        return Column(
-                          children: [
-                            Container(
+                            child: Container(
                               width: double.maxFinite,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(goal.title,
-                                            style: const TextStyle(
-                                                color:
-                                                Color.fromRGBO(158, 181, 103, 1),
-                                                fontSize: 18,
-                                                fontFamily: 'Pangram')),
-                                        Row(
-                                          children: [
-                                            const SizedBox(width: 8),
-                                            GestureDetector(
-                                                onTap: () {
-                                                  _showDeleteConfirmationDialog(
-                                                      goal.id!);
-                                                },
-                                                child: const Icon(Icons.delete)),
-                                          ],
+                                        Text(
+                                          goal.title,
+                                          style: TextStyle(
+                                            color: const Color.fromRGBO(158, 181, 103, 1),
+                                            fontSize: 18,
+                                            fontFamily: 'Pangram',
+                                            decoration: goal.isDone
+                                                ? TextDecoration.lineThrough
+                                                : TextDecoration.none,
+                                          ),
+                                        ),
+                                        PopupMenuButton<String>(
+                                          onSelected: (String value) {
+                                            if (value == 'markComplete') {
+                                              toggleGoalDoneStatus(goal.id!);
+                                            } else if (value == 'delete') {
+                                              _showDeleteConfirmationDialog(goal.id!);
+                                            }
+                                          },
+                                          itemBuilder: (BuildContext context) {
+                                            return [
+                                              PopupMenuItem<String>(
+                                                value: 'markComplete',
+                                                child: Text(goal.isDone ? 'Desmarcar como concluído' : 'Marcar como concluído'),
+                                              ),
+                                              const PopupMenuItem<String>(
+                                                value: 'delete',
+                                                child: Text('Excluir'),
+                                              ),
+                                            ];
+                                          },
+                                          icon: const Icon(Icons.more_vert, size: 24),
                                         ),
                                       ],
                                     ),
@@ -330,57 +422,57 @@ class _GoalsPageState extends State<GoalsPage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                            DateFormat('dd/MM/yy HH:mm')
-                                                .format(goal.scheduledTime),
-                                            style: const TextStyle(
-                                                fontFamily: 'Pangram',
-                                                fontWeight: FontWeight.w400)),
-                                        GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isExpanded[goal.id!] = !expanded;
-                                              });
-                                            },
-                                            child: Icon(expanded
-                                                ? Icons.arrow_drop_up
-                                                : Icons.arrow_drop_down)),
+                                          goal.isAllDay
+                                              ? 'Todos os dias'
+                                              : DateFormat('dd/MM/yy HH:mm').format(goal.scheduledTime),
+                                          style: const TextStyle(
+                                            fontFamily: 'Pangram',
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     if (expanded)
                                       Padding(
                                         padding: const EdgeInsets.only(top: 8.0),
-                                        child: Text("Criado por:' ${goal.createdBy}",
-                                            style: const TextStyle(
-                                                fontFamily: 'Pangram',
-                                                fontWeight: FontWeight.w300)),
+                                        child: Text(
+                                          "Criado por: ${goal.createdBy}",
+                                          style: const TextStyle(
+                                            fontFamily: 'Pangram',
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        ),
                                       ),
                                   ],
                                 ),
                               ),
                             ),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-                  )
-                      : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Gap(60),
-                      Image.asset('assets/emoji_not_found.png'),
-                      const Gap(30),
-                      const Text(
-                        'Nenhuma meta encontrada',
-                        style: TextStyle(fontSize: 16, fontFamily: 'Pangram'),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                          ),
+                        ],
+                      );
+                    }).toList(),
                   ),
-                ],
-              ),
+                )
+                    : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Gap(60),
+                    Image.asset('assets/emoji_not_found.png'),
+                    const Gap(30),
+                    const Text(
+                      'Nenhuma meta encontrada',
+                      style: TextStyle(fontSize: 16, fontFamily: 'Pangram'),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ]),
-        ));
+          ),
+        ]),
+      ),
+    );
   }
+
 }

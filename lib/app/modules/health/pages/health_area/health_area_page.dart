@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +35,25 @@ class _HealthAreaPageState extends State<HealthAreaPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  String generateRandomCode() {
+    final random = Random();
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return List.generate(6, (index) => chars[random.nextInt(chars.length)]).join();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     Account? account = Provider.of<AccountProvider>(context).account;
+
+    if (account?.codeToConnect == null || account?.codeToConnect!.length == 6) {
+      account?.codeToConnect = generateRandomCode();
+    }
+
     if (account != null && account.codeToConnect!.length == 6) {
       for (int i = 0; i < 6; i++) {
         controllers[i].text = account.codeToConnect![i];
@@ -155,53 +173,53 @@ class _HealthAreaPageState extends State<HealthAreaPage> {
                       List<Map<String, String>> affirmations = [
                         {
                           "quote":
-                          "Só há felicidade se não exigirmos nada do amanhã e aceitarmos do hoje, com gratidão, o que nos trouxer. A hora mágica chega sempre.",
-                          "author": "Hermann Hesse"
+                          "Você é mais forte do que imagina e mais capaz do que acredita. A felicidade é um estado de espírito, e você tem o poder de escolhê-la todos os dias.",
+                          "author": "Maya Angelou"
                         },
                         {
                           "quote":
-                          "Quando seu coração está pleno de gratidão, qualquer porta aparentemente fechada pode ser uma abertura para uma bênção maior.",
-                          "author": "Osho"
+                          "O amor próprio é a chave para a verdadeira felicidade. Abrace quem você é e encontre alegria em cada momento.",
+                          "author": "Eckhart Tolle"
                         },
                         {
                           "quote":
-                          "Sucesso é um esporte coletivo. Demonstre gratidão a todos os que colaboram com suas vitórias.",
-                          "author": "Carlos Hilsdorf"
+                          "A felicidade não é algo pronto. Ela vem de suas próprias ações e pensamentos. Cultive o amor próprio e veja a transformação em sua vida.",
+                          "author": "Dalai Lama"
                         },
                         {
                           "quote":
-                          "Desconfie do destino e acredite em você. Gaste mais horas realizando que sonhando, fazendo que planejando, embora quem quase morre esteja vivo, quem quase vive já morreu.",
-                          "author": "Abidurai Naxumerus"
+                          "Acredite em si mesmo e em tudo o que você é. Saiba que dentro de você há algo maior do que qualquer obstáculo.",
+                          "author": "Ralph Waldo Emerson"
                         },
                         {
                           "quote":
-                          "Quando você conhece a sensação de fracasso, a determinação persegue o sucesso.",
-                          "author": "Kobe Bryant"
+                          "O sucesso não é a chave para a felicidade. A felicidade é a chave para o sucesso. Se você ama o que está fazendo, você terá sucesso.",
+                          "author": "Albert Schweitzer"
                         },
                         {
                           "quote":
-                          "Acredite que você pode e você já está no meio do caminho.",
-                          "author": "Theodore Roosevelt"
+                          "Você não precisa ser perfeito para ser maravilhoso. Ame a si mesmo por quem você é e celebre suas conquistas.",
+                          "author": "Brené Brown"
                         },
                         {
                           "quote":
-                          "A única maneira de fazer um ótimo trabalho é amar o que você faz.",
-                          "author": "Steve Jobs"
+                          "Cada dia é uma nova oportunidade para se amar mais e ser feliz. Abrace o presente e construa um futuro de alegria.",
+                          "author": "Oprah Winfrey"
                         },
                         {
                           "quote":
-                          "A vida é 10% o que acontece com você e 90% como você reage a isso.",
-                          "author": "Charles R. Swindoll"
+                          "A verdadeira felicidade é encontrada ao viver uma vida autêntica e ao se amar incondicionalmente.",
+                          "author": "Deepak Chopra"
                         },
                         {
                           "quote":
-                          "O mais importante é tentar inspirar as pessoas para que elas sejam excelentes no que querem fazer.",
-                          "author": "Kobe Bryant"
+                          "Confie em si mesmo e você estará no caminho certo para alcançar a verdadeira felicidade e realização.",
+                          "author": "Adiburai Naxumerus"
                         },
                         {
                           "quote":
-                          "Passo a passo. Não consigo pensar em nenhum outro modo de se realizar algo.",
-                          "author": "Michael Jordan"
+                          "A jornada para o amor próprio e a felicidade é contínua. Cada passo que você dá é um avanço em direção à sua melhor versão.",
+                          "author": "Don Miguel Ruiz"
                         },
                       ];
 

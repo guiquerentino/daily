@@ -173,8 +173,8 @@ class _HomePagePlansState extends State<HomePagePlans> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Metas", style: TextStyle(fontFamily: 'Pangram', fontSize: 15, color: Color.fromRGBO(158, 181, 103, 1))),
-                              Text("Conclua uma meta", style: TextStyle(fontFamily: 'Pangram', fontSize: 19, fontWeight: FontWeight.bold)),
+                              Text("Planos", style: TextStyle(fontFamily: 'Pangram', fontSize: 15, color: Color.fromRGBO(158, 181, 103, 1))),
+                              Text("Conclua um plano", style: TextStyle(fontFamily: 'Pangram', fontSize: 19, fontWeight: FontWeight.bold)),
                               Text("2-5 min", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w200))
                             ],
                           ),

@@ -169,9 +169,9 @@ class _GenderOnboardingPageState extends State<GenderOnboardingPage> {
                 child: FilledButton(
                     onPressed: () {
                       if (isFemale) {
-                        account!.gender = 1;
-                      } else if (isMale) {
                         account!.gender = 0;
+                      } else if (isMale) {
+                        account!.gender = 1;
                       } else if (isPreferNotToSay) {
                         account!.gender = 2;
                       }

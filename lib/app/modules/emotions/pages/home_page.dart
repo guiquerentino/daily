@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       drawer: const DailyDrawer(),
-      bottomNavigationBar: const DailyBottomNavigationBar(),
+      bottomNavigationBar: DailyBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -76,19 +76,26 @@ class _HomePageState extends State<HomePage> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset("assets/chat.png"),
-                            const Text(
-                              "Chat",
-                              style: TextStyle(
-                                  fontFamily: 'Pangram',
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                        child: GestureDetector(
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              content: Text("Funcionalidade em desenvolvimento..."),
+                            ));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset("assets/chat.png"),
+                              const Text(
+                                "Chat",
+                                style: TextStyle(
+                                    fontFamily: 'Pangram',
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
