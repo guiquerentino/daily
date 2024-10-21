@@ -116,7 +116,7 @@ class _AnnotationsPageState extends State<AnnotationsPage> {
                       Provider.of<AccountProvider>(context, listen: false).account;
 
                   AnnotationRequest request = AnnotationRequest(
-                    authorId: account?.id ?? 0,
+                    authorId: account!.id,
                     text: noteText,
                     creationDate: DateTime.now(),
                   );

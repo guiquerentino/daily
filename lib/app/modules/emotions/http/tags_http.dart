@@ -9,7 +9,7 @@ class TagsHttp {
   Future<List<Tags>> fetchTags() async {
 
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:8080/api/v1/emotions/tags'),
+      Uri.parse('http://10.0.2.2:8080/api/v1/tags'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

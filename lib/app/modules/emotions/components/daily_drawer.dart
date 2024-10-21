@@ -118,18 +118,6 @@ class DailyDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.watch_outlined),
-                  title: DailyText.text("Lembretes").body.large.bold,
-                  trailing: const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 18,
-                  ),
-                  onTap: () {
-                    Provider.of<BottomNavigationBarProvider>(context, listen: false).selectedIndex = 0;
-                    Modular.to.navigate('/reminders');
-                  },
-                ),
-                ListTile(
                   leading: const Icon(Icons.equalizer),
                   title: DailyText.text("Metas").body.large.bold,
                   trailing: const Icon(

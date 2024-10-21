@@ -35,7 +35,7 @@ class Account {
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
       id: json['id'],
-      accountType: _getAccountTypeFromString(json['accountType']),
+      accountType: _getAccountTypeFromString(json['role']),
       email: json['email'],
       password: json['password'],
       completedGoals: (json['completedGoals'] as List<dynamic>?)
@@ -47,8 +47,8 @@ class Account {
           : null,
       gender: _getGenderFromString(json['gender']),
       age: json['age'],
-      targets: json['targets'] != null
-          ? List<int>.from(json['targets'])
+      targets: json['targetList'] != null
+          ? List<int>.from(json['targetList'])
           : null,
       hasOnboarding: json['hasOnboarding'],
       meditationExperience: _getMeditationExperienceFromString(json['meditationExperience']),
@@ -59,7 +59,7 @@ class Account {
   Map<String, dynamic> toJson() {
     return {
       'id': id?.toString(),
-      'accountType': accountType.toString().split('.').last,
+      'role': accountType.toString().split('.').last,
       'email': email,
       'password': password,
       'fullName': fullName,
@@ -67,7 +67,7 @@ class Account {
       'profilePhoto': profilePhoto,
       'gender': gender.toString().split('.').last,
       'age': age,
-      'targets': targets?.map((e) => e.toString().split('.').last).toList(),
+      'targetList': targets?.map((e) => e.toString().split('.').last).toList(),
       'hasOnboarding': hasOnboarding,
       'meditationExperience': meditationExperience.toString().split('.').last,
       'codeToConnect': codeToConnect,
@@ -88,9 +88,9 @@ class Account {
   static int? _getGenderFromString(String? gender) {
     switch (gender) {
       case "MALE":
-        return 0;
-      case "FEMALE":
         return 1;
+      case "FEMALE":
+        return 0;
       case "NONE":
         return 2;
       default:

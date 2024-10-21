@@ -176,7 +176,7 @@ class _NotesEditBottomSheetState extends State<NotesEditBottomSheet> {
                                 widget.emotion.text = _notaController.text;
                                 widget.emotion.ownerId = account!.id;
 
-                                await EmotionsHttp().saveRegister(widget.emotion);
+                                await EmotionsHttp().updateRegister(widget.emotion);
 
                                 if (mounted) {
                                   Navigator.of(context).pop();

@@ -33,8 +33,8 @@ class Emotion {
         orElse: () => EMOTION_TYPE.FELIZ,
       )
           : null,
-      creationDate: json['creationDate'] != null
-          ? DateTime.parse(json['creationDate'])
+      creationDate: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
           : null,
       tags: (json['tags'] as List<dynamic>?)
           ?.map((tagJson) => Tags.fromJson(tagJson as Map<String, dynamic>))
@@ -45,11 +45,11 @@ class Emotion {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'ownerId': ownerId,
+      'userId': ownerId,
       'text': text,
       'comment': comment,
       'emotionType': emotionType?.toString().split('.').last,
-      'creationDate': creationDate?.toIso8601String(),
+      'createdAt': creationDate?.toIso8601String(),
       'tags': tags?.map((e) => e.toJson()).toList(),
     };
   }

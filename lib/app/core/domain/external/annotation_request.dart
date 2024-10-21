@@ -13,18 +13,18 @@ class AnnotationRequest {
   factory AnnotationRequest.fromJson(Map<String, dynamic> json){
     return AnnotationRequest(
         id: json['id'],
-        authorId: json['authorId'],
+        authorId: json['userId'],
         text: json['text'],
-        creationDate: DateTime.parse(json['creationDate']),
+        creationDate: DateTime.parse(json['createdAt']),
     );
   }
 
   Map<String,dynamic> toJson(){
     return {
       'id':id,
-      'authorId':authorId,
+      'userId':authorId,
       'text':text,
-      'creationDate': creationDate.toIso8601String(),
+      'createdAt': creationDate.toIso8601String(),
     };
   }
 

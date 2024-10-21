@@ -44,7 +44,6 @@ class _HomePageState extends State<EmotionsHistoryPage> {
               DailyEmotionsCalendar(),
               Gap(10),
               DailyEmotionRegisters(),
-              DailyEmotionsScoreboard(),
             ],
           ),
         ),

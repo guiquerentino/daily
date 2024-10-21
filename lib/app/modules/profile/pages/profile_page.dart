@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (image != null) {
       final Uint8List imageBytes = await image.readAsBytes();
       accountProvider.updateProfilePhoto(
-          imageBytes, accountProvider.account!.id!);
+          imageBytes, accountProvider.account!.id!, _nameController!.text, _emailController!.text, _selectedGender!);
     }
   }
 

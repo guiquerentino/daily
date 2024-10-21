@@ -13,7 +13,7 @@ class CreateAccountRequest {
     return {
       'email':email,
       'password':password,
-      'accountType':accountType
+      'role':accountType
     };
   }
 }

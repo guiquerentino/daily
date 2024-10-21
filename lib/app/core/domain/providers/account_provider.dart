@@ -21,15 +21,17 @@ class AccountProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateProfilePhoto(Uint8List newPhoto, int userId) async {
+  Future<void> updateProfilePhoto(Uint8List newPhoto, int userId, String fullName, String email, int gender) async {
     if (_account != null) {
       _account!.profilePhoto = newPhoto;
       notifyListeners();
 
       String base64Image = base64Encode(newPhoto);
 
+      ChangeAccountRequest request = new ChangeAccountRequest(userId: userId, fullName: fullName, email: email, gender: gender, profilePhoto: newPhoto);
+
       final response = await http.put(
-        Uri.parse('http://10.0.2.2:8080/api/v1/account/profile-photo?userId=$userId'),
+        Uri.parse('http://10.0.2.2:8080/api/v1/user/profile-photo?userId=$userId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -43,7 +45,7 @@ class AccountProvider with ChangeNotifier {
     ChangeAccountRequest request = new ChangeAccountRequest(userId: userId, fullName: fullName, email: email, gender: gender);
 
     final response = await http.put(
-      Uri.parse('http://10.0.2.2:8080/api/v1/account/update-profile'),
+      Uri.parse('http://10.0.2.2:8080/api/v1/user/update-profile?userId=' + request.userId.toString()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

@@ -166,13 +166,15 @@ class _LoginPageState extends State<LoginPage> {
                                     .neutral,
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
+
                                     LoginRequest request = LoginRequest(
                                         email: _emailController.text,
                                         password: _passwordController.text,
-                                        accountType: 0);
+                                        );
 
                                     Response response = await AuthHttp()
                                         .authorizeAccount(request);
+
                                     if (response.statusCode == 202) {
                                       if (lembrarDeMim) {
                                         final prefs = await SharedPreferences
@@ -191,8 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                                               listen: false)
                                           .setAccount(account);
 
-                                      if (account.fullName == null ||
-                                          account.fullName!.isEmpty) {
+                                      if (account.hasOnboarding != true) {
                                         Modular.to.navigate('/onboarding');
                                       } else {
                                         Modular.to.navigate(

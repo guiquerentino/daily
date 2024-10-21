@@ -25,7 +25,7 @@ class Article {
         category: json['category'],
         minutesToRead: json['minutesToRead'],
         bannerURL: json['bannerURL'],
-        creationDate: DateTime.parse(json['creationDate']));
+        creationDate: DateTime.parse(json['createdAt']));
   }
 
   Map<String, dynamic> toJson() {
@@ -36,7 +36,7 @@ class Article {
       'category':category,
       'minutesToRead': minutesToRead,
       'bannerURL': bannerURL,
-      'creationDate': creationDate
+      'createdAt': creationDate
     };
   }
 

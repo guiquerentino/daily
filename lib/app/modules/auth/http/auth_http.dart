@@ -11,7 +11,7 @@ import '../../../core/domain/account.dart';
 class AuthHttp {
   Future<http.Response> createAccount(CreateAccountRequest request) {
     return http.post(
-      Uri.parse('http://10.0.2.2:8080/api/v1/account'),
+      Uri.parse('http://10.0.2.2:8080/api/v1/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -21,7 +21,7 @@ class AuthHttp {
 
   Future<http.Response> authorizeAccount(LoginRequest request) {
     return http.post(
-      Uri.parse('http://10.0.2.2:8080/api/v1/account/authorize'),
+      Uri.parse('http://10.0.2.2:8080/api/v1/user/authorize'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -31,7 +31,7 @@ class AuthHttp {
 
   Future<http.Response> changePassword(ChangePasswordRequest request) {
     return http.put(
-      Uri.parse('http://10.0.2.2:8080/api/v1/account/password'),
+      Uri.parse('http://10.0.2.2:8080/api/v1/user/password'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -49,6 +49,6 @@ class AuthHttp {
       return null;
     }
 
-    return LoginRequest(accountType: 0, email: email, password: password);
+    return LoginRequest(email: email, password: password);
   }
 }

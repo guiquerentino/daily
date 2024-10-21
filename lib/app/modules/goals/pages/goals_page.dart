@@ -46,17 +46,24 @@ class _GoalsPageState extends State<GoalsPage> {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> toggleGoalDoneStatus(int goalId) async {
+  Future<void> toggleGoalDoneStatus(Goal request) async {
+
+    request.isDone = !request.isDone;
+
     try {
       final response = await http.put(
-        Uri.parse('http://10.0.2.2:8080/api/v1/goals?goalId=$goalId'),
+        Uri.parse('http://10.0.2.2:8080/api/v1/goals'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        body: jsonEncode(request.toJson())
       );
 
       if (response.statusCode == 200) {
         setState(() {
           fetchedGoals = fetchedGoals.map((goal) {
-            if (goal.id == goalId) {
-              return goal.copyWith(isDone: !goal.isDone);
+            if (goal.id == request.id) {
+              return goal.copyWith(isDone: goal.isDone);
             }
             return goal;
           }).toList();
@@ -397,7 +404,7 @@ class _GoalsPageState extends State<GoalsPage> {
                                         PopupMenuButton<String>(
                                           onSelected: (String value) {
                                             if (value == 'markComplete') {
-                                              toggleGoalDoneStatus(goal.id!);
+                                              toggleGoalDoneStatus(goal);
                                             } else if (value == 'delete') {
                                               _showDeleteConfirmationDialog(goal.id!);
                                             }

@@ -23,11 +23,11 @@ class Goal {
     return Goal(
         id: json['id'],
         userId: json['userId'],
-        isDone: json['done'],
+        isDone: json['isCompleted'],
         title: json['title'],
-        isAllDay: json['allDay'],
+        isAllDay: json['isAllDay'],
         createdBy: json['createdBy'],
-        creationDate: DateTime.parse(json['creationDate']),
+        creationDate: DateTime.parse(json['createdAt']),
         scheduledTime: DateTime.parse(json['scheduledTime']));
   }
 
@@ -56,10 +56,10 @@ class Goal {
       'id': id,
       'userId': userId,
       'title': title,
-      'isDone': isDone,
-      'allDay': isAllDay,
+      'isCompleted': isDone,
+      'isAllDay': isAllDay,
       'createdBy': createdBy,
-      'creationDate': creationDate?.toIso8601String(),
+      'createdAt': creationDate?.toIso8601String(),
       'scheduledTime': scheduledTime?.toIso8601String(),
     };
   }

@@ -1,21 +1,26 @@
+import 'dart:typed_data';
+
 class ChangeAccountRequest {
   int userId;
   String fullName;
   String email;
   int gender;
+  Uint8List? profilePhoto;
 
   ChangeAccountRequest(
       {required this.userId,
       required this.fullName,
       required this.email,
-      required this.gender});
+      required this.gender,
+      this.profilePhoto});
 
   Map<String, dynamic> toJson() {
     return {
-      'userId': userId,
-      'fullName': fullName,
+      'name': fullName,
       'email': email,
-      'gender': gender
+      'gender': gender,
+      'profilePhoto': profilePhoto,
+      'role': 0
     };
   }
 }

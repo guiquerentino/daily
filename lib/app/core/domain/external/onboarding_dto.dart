@@ -18,11 +18,11 @@ class OnboardingDTO {
   factory OnboardingDTO.fromJson(Map<String, dynamic> json) {
     return OnboardingDTO(
       accountId: json['accountId'],
-      fullName: json['fullName'],
+      fullName: json['name'],
       gender: json['gender'] ?? 0,
       age: json['age'] ?? 0,
-      target: json['target'] != null
-          ? List<int>.from(json['target'])
+      target: json['targets'] != null
+          ? List<int>.from(json['targets'])
           : [],
       meditationExperience: json['meditationExperience'] ?? 0,
     );
@@ -31,7 +31,7 @@ class OnboardingDTO {
   Map<String, dynamic> toJson() {
     return {
       'accountId': accountId,
-      'fullName': fullName,
+      'name': fullName,
       'gender': gender,
       'age': age,
       'target': target,
