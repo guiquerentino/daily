@@ -6,6 +6,7 @@ import 'package:daily/app/modules/ui/daily_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:gap/gap.dart';
+import 'package:http/http.dart';
 import '../components/daily_login_app_bar.dart';
 import '../http/auth_http.dart';
 
@@ -25,6 +26,7 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
   final _newPasswordController = TextEditingController();
   bool mostrarSenha = false;
   bool mostrarSenhaConfirm = false;
+  bool erro = false;
 
   String? emailValidator(String? value) {
     final emailRegex = RegExp(
@@ -150,13 +152,16 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                       });
                                     })),
                           ),
-                          const Gap(41),
+                          const Gap(15),
+                          if(erro)
+                            Text("Erro ao cadastrar conta.", style: TextStyle(color: Colors.red)),
+                          const Gap(30),
                           DailyButton(
                               text: DailyText.text("Cadastrar")
                                   .body
                                   .large
                                   .neutral,
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
 
                                   CreateAccountRequest request =
@@ -165,10 +170,16 @@ class _AccountCreationPageState extends State<AccountCreationPage> {
                                           password: _passwordController.text,
                                           accountType: 0);
 
-                                  AuthHttp().createAccount(request);
+                                  Response response = await AuthHttp().createAccount(request);
 
-                                  Modular.to.navigate(
-                                      '/auth${const ConfirmEmailCodePage().ROUTE_NAME}');
+                                  if(response.statusCode != 201) {
+                                    setState(() {
+                                      erro = true;
+                                    });
+                                  } else {
+                                    Modular.to.navigate(
+                                        '/auth${const ConfirmEmailCodePage().ROUTE_NAME}');
+                                  }
                                 }
                               })
                         ],

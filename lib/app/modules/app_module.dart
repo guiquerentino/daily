@@ -1,6 +1,7 @@
 import 'package:daily/app/modules/annotations/annotations_module.dart';
 import 'package:daily/app/modules/articles/articles_modules.dart';
 import 'package:daily/app/modules/auth/auth_module.dart';
+import 'package:daily/app/modules/chat/chat_module.dart';
 import 'package:daily/app/modules/emotions/emotions_module.dart';
 import 'package:daily/app/core/pages/splash_page.dart';
 import 'package:daily/app/modules/goals/goals_module.dart';
@@ -32,5 +33,6 @@ class AppModule extends Module {
     r.module('/may', module: MayModule());
     r.module('/goals', module: GoalsModule());
     r.module('/tests', module: TestsModule());
+    r.module('/chat', module: ChatModule());
     }
 }

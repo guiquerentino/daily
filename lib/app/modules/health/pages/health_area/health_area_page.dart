@@ -50,16 +50,15 @@ class _HealthAreaPageState extends State<HealthAreaPage> {
     super.didChangeDependencies();
     Account? account = Provider.of<AccountProvider>(context).account;
 
-    if (account?.codeToConnect == null || account?.codeToConnect!.length == 6) {
-      account?.codeToConnect = generateRandomCode();
-    }
-
-    if (account != null && account.codeToConnect!.length == 6) {
+    if (account != null && account.codeToConnect != null && account.codeToConnect!.length == 6) {
       for (int i = 0; i < 6; i++) {
         controllers[i].text = account.codeToConnect![i];
       }
+    } else {
+      print('O código de conexão não está disponível ou é inválido.');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

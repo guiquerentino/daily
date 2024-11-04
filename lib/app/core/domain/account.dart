@@ -52,7 +52,7 @@ class Account {
           : null,
       hasOnboarding: json['hasOnboarding'],
       meditationExperience: _getMeditationExperienceFromString(json['meditationExperience']),
-      codeToConnect: json['codeToConnect'],
+      codeToConnect: json['connectionCode'],
     );
   }
 
@@ -70,7 +70,7 @@ class Account {
       'targetList': targets?.map((e) => e.toString().split('.').last).toList(),
       'hasOnboarding': hasOnboarding,
       'meditationExperience': meditationExperience.toString().split('.').last,
-      'codeToConnect': codeToConnect,
+      'connectionCode': codeToConnect,
     };
   }
 

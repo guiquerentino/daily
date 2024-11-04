@@ -59,7 +59,7 @@ class _SucessfullOnboardingPageState extends State<SucessfullOnboardingPage>
         target: account.targets!,
         meditationExperience: account.meditationExperience!);
 
-    final url = Uri.parse('http://10.0.2.2:8080/api/v1/user/onboarding/patient?userId=' + request.accountId.toString());
+    final url = Uri.parse('http://10.0.2.2:8080/api/v1/user/onboarding?userId=' + request.accountId.toString());
     final headers = {
       'Content-Type': 'application/json',
     };

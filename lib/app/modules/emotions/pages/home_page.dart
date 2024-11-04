@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
       drawer: const DailyDrawer(),
-      bottomNavigationBar: DailyBottomNavigationBar(),
+      bottomNavigationBar: const DailyBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -67,21 +67,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: 170,
-                      height: 65,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text("Funcionalidade em desenvolvimento..."),
-                            ));
-                          },
+                    GestureDetector(
+                      onTap: () {
+                        Modular.to.pushNamed("/chat");
+                      },
+                      child: Container(
+                        width: 170,
+                        height: 65,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
