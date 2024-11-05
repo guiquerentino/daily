@@ -9,7 +9,7 @@ class EmotionsHttp {
     final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(dataHora);
     final response = await http.get(
       Uri.parse(
-          'http://10.0.2.2:8080/api/v1/emotions/user/$ownerId?date=$formattedDate'),
+          'http://10.0.2.2:8080/api/v1/emotions/user/$ownerId?date=$formattedDate&isPatient=false'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

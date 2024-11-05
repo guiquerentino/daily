@@ -51,7 +51,7 @@ class DailyDrawer extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                             child: account?.profilePhoto != null
-                                ? Image.memory(account!.profilePhoto!)
+                                ? ClipOval(child: Image.memory(account!.profilePhoto!, fit: BoxFit.cover))
                                 : const Center(
                               child: Icon(
                                 Icons.person,

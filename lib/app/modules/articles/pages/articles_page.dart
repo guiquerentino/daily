@@ -157,6 +157,14 @@ class _ArticlesPageState extends State<ArticlesPage> {
                               width: 120,
                               height: 110,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  width: 120,
+                                  height: 110,
+                                  color: Colors.white,
+                                  child: const Icon(Icons.broken_image, color: Colors.grey, size: 60),
+                                );
+                              },
                             ),
                           ),
                           const Gap(10),

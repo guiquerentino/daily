@@ -27,7 +27,7 @@ class _ChatDetailsMessageState extends State<ChatDetailsMessage> {
 
   Future<void> fetchMessages() async {
     int id = widget.chatId;
-
+    print(id);
     final response = await http.get(
       Uri.parse('http://10.0.2.2:8080/api/v1/chat?chatId=$id'),
       headers: <String, String>{
@@ -40,7 +40,6 @@ class _ChatDetailsMessageState extends State<ChatDetailsMessage> {
         messages = ChatMessageDto.fromJsonList(jsonDecode(response.body));
       });
     } else {
-      // Handle error
       print('Failed to load messages');
     }
   }
@@ -109,7 +108,7 @@ class _ChatDetailsMessageState extends State<ChatDetailsMessage> {
                 );
               },
             )
-                : Center(child: CircularProgressIndicator()),
+                : Container(),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

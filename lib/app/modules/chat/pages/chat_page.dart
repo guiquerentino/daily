@@ -24,6 +24,7 @@ class _ChatPageState extends State<ChatPage> {
   ChatDTO? chat;
   Timer? _timer;
   bool _isSearching = false;
+  bool _isLoading = true;
 
   String _decodeUtf8(String text) {
     return utf8.decode(text.codeUnits);
@@ -42,6 +43,7 @@ class _ChatPageState extends State<ChatPage> {
 
     setState(() {
       chat = ChatDTO.fromJson(jsonDecode(response.body));
+      _isLoading = false;
     });
   }
 
@@ -76,7 +78,9 @@ class _ChatPageState extends State<ChatPage> {
               padding: EdgeInsets.all(8.0),
               child: DailyAppBar(title: "Chat"),
             ),
-            chat == null
+            _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : chat == null
                 ? Column(
               children: [
                 const Gap(100),
@@ -91,7 +95,7 @@ class _ChatPageState extends State<ChatPage> {
             )
                 : GestureDetector(
               onTap: () {
-                Modular.to.navigate("/chat/messages?patientName=${chat!.psychologist!.name}", arguments: chat!.id, );
+                Modular.to.pushNamed("/chat/messages?patientName=${chat!.psychologist!.name}", arguments: chat!.id, );
               },
               child: Container(
                 width: double.maxFinite,

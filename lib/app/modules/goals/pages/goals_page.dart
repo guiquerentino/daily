@@ -219,7 +219,7 @@ class _GoalsPageState extends State<GoalsPage> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
+                          backgroundColor: Colors.white,
                         ),
                         child: Text(
                           goalDateTime != null
@@ -238,7 +238,7 @@ class _GoalsPageState extends State<GoalsPage> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: isAllDayButtonPressed
+                          backgroundColor: isAllDayButtonPressed
                               ? const Color.fromRGBO(158, 181, 103, 1)
                               : Colors.white,
                         ),
