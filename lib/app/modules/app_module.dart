@@ -3,7 +3,7 @@ import 'package:daily/app/modules/articles/articles_modules.dart';
 import 'package:daily/app/modules/auth/auth_module.dart';
 import 'package:daily/app/modules/chat/chat_module.dart';
 import 'package:daily/app/modules/emotions/emotions_module.dart';
-import 'package:daily/app/core/pages/splash_page.dart';
+import 'package:daily/app/modules/splash/pages/splash_page.dart';
 import 'package:daily/app/modules/goals/goals_module.dart';
 import 'package:daily/app/modules/health/health_module.dart';
 import 'package:daily/app/modules/may/may_module.dart';
@@ -11,6 +11,7 @@ import 'package:daily/app/modules/meditation/meditation_module.dart';
 import 'package:daily/app/modules/onboarding/onboarding_module.dart';
 import 'package:daily/app/modules/profile/profile_module.dart';
 import 'package:daily/app/modules/reminders/reminders_module.dart';
+import 'package:daily/app/modules/splash/splash_module.dart';
 import 'package:daily/app/modules/tests/tests_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -20,7 +21,7 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    r.child('/', child: (context) => SplashPage());
+    r.module(Modular.initialRoute, module: SplashModule());
     r.module('/auth', module: AuthModule());
     r.module('/emotions', module: EmotionsModule());
     r.module('/onboarding', module: OnboardingModule());
