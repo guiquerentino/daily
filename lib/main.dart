@@ -10,6 +10,7 @@ import 'app/modules/app_module.dart';
 import 'app/modules/app_widget.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   Gemini.init(apiKey: 'AIzaSyA1gB5U-eKyY1Mrr1mUyQKZDjOtOO4wnTY');
 
   runApp(MultiProvider(
