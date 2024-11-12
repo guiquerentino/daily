@@ -33,7 +33,7 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> fetchChat() async {
     Account? account = Provider.of<AccountProvider>(context, listen: false).account;
 
-    int id = account!.id!;
+    int id = account?.id ?? 0;
     final response = await http.get(
       Uri.parse('http://10.0.2.2:8080/api/v1/chat/patient?patientId=$id'),
       headers: <String, String>{
@@ -42,7 +42,11 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     setState(() {
-      chat = ChatDTO.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        chat = ChatDTO.fromJson(jsonDecode(response.body));
+      } else {
+        chat = null;
+      }
       _isLoading = false;
     });
   }
@@ -79,15 +83,15 @@ class _ChatPageState extends State<ChatPage> {
               child: DailyAppBar(title: "Chat"),
             ),
             _isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : chat == null
+                ? const Center(child: CircularProgressIndicator())
+                : chat == null
                 ? Column(
               children: [
                 const Gap(100),
                 Image.asset('assets/emoji_not_found.png'),
                 const Gap(10),
                 const Text(
-                  'Nenhum paciente encontrado',
+                  'Nenhuma conversa encontrada',
                   style: TextStyle(fontSize: 16, fontFamily: 'Pangram'),
                   textAlign: TextAlign.center,
                 ),
@@ -95,7 +99,12 @@ class _ChatPageState extends State<ChatPage> {
             )
                 : GestureDetector(
               onTap: () {
-                Modular.to.pushNamed("/chat/messages?patientName=${chat!.psychologist!.name}", arguments: chat!.id, );
+                if (chat != null && chat!.psychologist != null) {
+                  Modular.to.pushNamed(
+                    "/chat/messages?patientName=${chat!.psychologist!.name}",
+                    arguments: chat!.id,
+                  );
+                }
               },
               child: Container(
                 width: double.maxFinite,
@@ -120,9 +129,9 @@ class _ChatPageState extends State<ChatPage> {
                         width: 55,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color.fromRGBO(3, 52, 110, 1),
+                          color: const Color.fromRGBO(158, 181, 103, 1),
                         ),
-                        child: chat!.psychologist!.profilePhoto != null
+                        child: chat?.psychologist?.profilePhoto != null
                             ? ClipOval(
                           child: Image.memory(
                             chat!.psychologist!.profilePhoto!,
@@ -143,18 +152,18 @@ class _ChatPageState extends State<ChatPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            chat!.psychologist!.name!,
+                            chat?.psychologist?.name ?? '',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
                           ),
-                          if (chat!.lastMessage != null)
+                          if (chat?.lastMessage != null)
                             Text(_shortenMessage(
                                 _decodeUtf8(chat!.lastMessage!))),
                         ],
                       ),
                       const Spacer(),
-                      if (chat!.lastMessageTime != null)
+                      if (chat?.lastMessageTime != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 14.0),
                           child: Text(

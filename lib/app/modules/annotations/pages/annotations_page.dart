@@ -144,6 +144,10 @@ class _AnnotationsPageState extends State<AnnotationsPage> {
     );
   }
 
+  String _decodeUtf8(String text) {
+    return utf8.decode(text.codeUnits);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,7 +216,7 @@ class _AnnotationsPageState extends State<AnnotationsPage> {
                               children: [
                                 SizedBox(
                                   width: 335,
-                                  child: Text(annotation.text,
+                                  child: Text(_decodeUtf8(annotation.text),
                                       style: const TextStyle(
                                           color:
                                           Colors.black,

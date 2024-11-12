@@ -81,7 +81,7 @@ class _ChatDetailsMessageState extends State<ChatDetailsMessage> {
                     child: Container(
                       padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
-                        color: !isPsychologist ? Color.fromRGBO(3, 52, 110, 1) : Colors.grey[300],
+                        color: !isPsychologist ? const Color.fromRGBO(158, 181, 103, 1) : Colors.grey[300],
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -128,7 +128,7 @@ class _ChatDetailsMessageState extends State<ChatDetailsMessage> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send, color: Color.fromRGBO(3, 52, 110, 1)),
+                  icon: const Icon(Icons.send, color: Color.fromRGBO(158, 181, 103, 1)),
                   onPressed: () async {
                     ChatMessageDto request = ChatMessageDto(chatId: widget.chatId, sender: 'patient', content: _messageController.text);
 

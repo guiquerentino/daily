@@ -76,6 +76,9 @@ class _GoalsPageState extends State<GoalsPage> {
     }
   }
 
+  String _decodeUtf8(String text) {
+    return utf8.decode(text.codeUnits);
+  }
 
   Future<void> scheduleNotification(Goal goal) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
@@ -315,9 +318,6 @@ class _GoalsPageState extends State<GoalsPage> {
     );
   }
 
-
-
-
   @override
   @override
   Widget build(BuildContext context) {
@@ -391,7 +391,7 @@ class _GoalsPageState extends State<GoalsPage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          goal.title,
+                                          _decodeUtf8(goal.title),
                                           style: TextStyle(
                                             color: const Color.fromRGBO(158, 181, 103, 1),
                                             fontSize: 18,
