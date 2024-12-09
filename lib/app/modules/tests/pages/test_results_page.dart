@@ -27,15 +27,17 @@ class _TestResultsPageState extends State<TestResultsPage> {
 
       testType = _decodeUtf8(testType);
 
-      if (testType == "Teste de Depressão Simplificado") {
-        if (score <= 10) {
-          return "Você está indo bem! Sua pontuação sugere que você está lidando bem com os desafios da vida. Continue cuidando de sua saúde mental e mantenha práticas positivas no seu dia a dia.";
-        } else if (score <= 20) {
-          return "Sua pontuação indica que você pode estar enfrentando alguns desafios. É importante prestar atenção em como você está se sentindo. Considere conversar com um amigo ou profissional sobre o que você está passando.";
-        } else if (score <= 30) {
-          return "Sua pontuação sugere que você pode estar passando por uma fase difícil. Seria bom buscar apoio, seja de amigos, familiares ou um profissional de saúde mental.";
+      if (testType == "PHQ-9") {
+        if (score <= 4) {
+          return "Sua pontuação indica que você está em um nível baixo de sintomas depressivos. Continue mantendo boas práticas de saúde mental e bem-estar.";
+        } else if (score <= 9) {
+          return "Sua pontuação sugere sintomas leves de depressão. Pode ser útil prestar atenção em como você está se sentindo e considerar conversar com alguém de confiança.";
+        } else if (score <= 14) {
+          return "Sua pontuação indica sintomas moderados de depressão. Seria benéfico buscar apoio emocional e considerar procurar um profissional de saúde mental.";
+        } else if (score <= 19) {
+          return "Sua pontuação sugere sintomas moderadamente graves de depressão. É importante procurar apoio profissional para ajudar a gerenciar seus sentimentos e melhorar seu bem-estar.";
         } else {
-          return "Sua pontuação indica que você pode estar enfrentando uma depressão significativa. É altamente recomendável procurar apoio profissional para ajudar a gerenciar seus sentimentos e melhorar seu bem-estar.";
+          return "Sua pontuação indica sintomas graves de depressão. É altamente recomendado procurar ajuda de um profissional de saúde mental o mais rápido possível.";
         }
       } else if (testType == "Teste de Ansiedade") {
         if (score <= 10) {
@@ -126,7 +128,7 @@ class _TestResultsPageState extends State<TestResultsPage> {
             DailyText.text("Pontuação: ${widget.results}").header.medium,
             const Gap(20),
             LinearProgressIndicator(
-              value: widget.results / 40,
+              value: widget.results / 27,
               color: getScoreColor(widget.results),
               backgroundColor: Colors.grey[200],
             ),

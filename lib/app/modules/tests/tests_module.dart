@@ -15,7 +15,10 @@ class TestsModule extends Module{
   void routes(RouteManager r) {
     r.child(Modular.initialRoute, child: (context) => TestsPage());
     r.child('/details', child: (context) => DetailsTestPage(test: r.args.data));
-    r.child('/results', child: (context) => TestResultsPage(results: r.args.data, testType: r.args.queryParams['testType'] ?? ''));
+    r.child('/results', child: (context) => TestResultsPage(
+      results: r.args.data,
+      testType: 'PHQ-9', // Valor fixo
+    ));
     r.child('/start', child: (context) => TestsStartPage(test: r.args.data));
   }
   

@@ -17,13 +17,14 @@ class TestsStartPage extends StatefulWidget {
 
 class _TestsStartPageState extends State<TestsStartPage> {
   int _currentQuestionIndex = 0;
-  late Map<String, dynamic> _questions;
+  late List<Map<String, dynamic>> _questions;
   List<int> _answers = [];
 
   @override
   void initState() {
     super.initState();
-    _questions = jsonDecode(widget.test.questions);
+    final List<dynamic> jsonData = jsonDecode(widget.test.questions);
+    _questions = jsonData.map((question) => question as Map<String, dynamic>).toList();
   }
 
   @override
@@ -32,9 +33,13 @@ class _TestsStartPageState extends State<TestsStartPage> {
       return utf8.decode(text.codeUnits);
     }
 
-    final questionsList = _questions.values.toList();
-    final totalQuestions = questionsList.length;
-    final currentQuestion = questionsList[_currentQuestionIndex];
+    final totalQuestions = _questions.length;
+    if (_currentQuestionIndex >= totalQuestions) return Container(); // Verifica índice válido
+    final currentQuestion = _questions[_currentQuestionIndex];
+
+    if (!currentQuestion.containsKey('question') || !currentQuestion.containsKey('options')) {
+      return Center(child: Text("Dados da pergunta estão incompletos."));
+    }
 
     return Scaffold(
       drawer: const DailyDrawer(),
@@ -47,7 +52,7 @@ class _TestsStartPageState extends State<TestsStartPage> {
                 if (_currentQuestionIndex == 0)
                   IconButton(
                     onPressed: () {
-                      Modular.to.navigate('/tests');
+                      Modular.to.navigate('/tests/');
                     },
                     icon: const Icon(Icons.close, size: 30),
                   )
@@ -81,7 +86,7 @@ class _TestsStartPageState extends State<TestsStartPage> {
             const Gap(20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: currentQuestion['options'].entries.map<Widget>((entry) {
+              children: (currentQuestion['options'] as Map<String, dynamic>).entries.map<Widget>((entry) {
                 return GestureDetector(
                   onTap: () {
                     _handleOptionSelection(entry.value);
@@ -101,6 +106,21 @@ class _TestsStartPageState extends State<TestsStartPage> {
                 );
               }).toList(),
             ),
+            // Botão de finalizar, visível apenas na última pergunta
+            if (_currentQuestionIndex == _questions.length - 1)
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showResults(widget.test.title);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                    backgroundColor: const Color.fromRGBO(158, 181, 103, 1),
+                  ),
+                  child: const Text("Finalizar Teste",style: TextStyle(fontSize: 18, fontFamily: 'Pangram'),),
+                ),
+              ),
           ],
         ),
       ),
@@ -121,6 +141,7 @@ class _TestsStartPageState extends State<TestsStartPage> {
 
   void _showResults(String testTitle) {
     int totalScore = _answers.reduce((a, b) => a + b);
-    Modular.to.navigate('/tests/results?testType=$testTitle', arguments: totalScore);
+    print("Pontuação Total: $totalScore");
+    Modular.to.navigate('/tests/results', arguments: totalScore);
   }
 }

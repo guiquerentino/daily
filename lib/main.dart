@@ -14,7 +14,7 @@ void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  Gemini.init(apiKey: 'AIzaSyA1gB5U-eKyY1Mrr1mUyQKZDjOtOO4wnTY');
+  Gemini.init(apiKey: 'AIzaSyAFCNvuKIV5JTr5Inq0KuuyEjK0TNdJHhg');
 
   runApp(MultiProvider(
       providers: [
